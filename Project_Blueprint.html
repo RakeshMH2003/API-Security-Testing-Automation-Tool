@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Project Blueprint</title>
+    <style>
+
+:root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface2: #334155;
+    --border: #475569;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --green: #4ade80;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --orange: #fb923c;
+    --purple: #c084fc;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 30px;
+}
+
+.cover {
+    text-align: center;
+    padding: 80px 20px 60px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    border-bottom: 3px solid var(--accent);
+    margin-bottom: 40px;
+}
+.cover h1 {
+    font-size: 2.8em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+.cover .subtitle {
+    font-size: 1.2em;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+}
+.cover .badge {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 6px 20px;
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    color: var(--accent);
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.2em;
+    color: var(--accent);
+    margin: 50px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--surface2);
+}
+h2 {
+    font-size: 1.6em;
+    color: var(--accent);
+    margin: 45px 0 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--surface2);
+}
+h3 {
+    font-size: 1.25em;
+    color: var(--accent2);
+    margin: 30px 0 12px;
+}
+h4 {
+    font-size: 1.05em;
+    color: var(--purple);
+    margin: 20px 0 8px;
+}
+
+p { margin: 10px 0; color: var(--text); }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: var(--surface);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.92em;
+}
+thead th {
+    background: linear-gradient(135deg, #1e3a5f, #2d1b69);
+    color: #fff;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+tbody td {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--surface2);
+    color: var(--text);
+}
+tbody tr:hover { background: var(--surface2); }
+tbody tr:last-child td { border-bottom: none; }
+
+code {
+    background: var(--surface2);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.88em;
+    color: var(--green);
+}
+pre {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 15px 0;
+    overflow-x: auto;
+    font-size: 0.85em;
+    line-height: 1.6;
+}
+pre code {
+    background: none;
+    padding: 0;
+    color: var(--text);
+}
+
+ul, ol {
+    margin: 10px 0 10px 25px;
+}
+li {
+    margin: 5px 0;
+    color: var(--text);
+}
+li strong { color: var(--accent); }
+
+blockquote {
+    border-left: 4px solid var(--accent);
+    background: var(--surface);
+    padding: 15px 20px;
+    margin: 15px 0;
+    border-radius: 0 8px 8px 0;
+}
+blockquote.alert-important {
+    border-left-color: var(--purple);
+    background: rgba(192, 132, 252, 0.08);
+}
+blockquote.alert-warning {
+    border-left-color: var(--yellow);
+    background: rgba(251, 191, 36, 0.08);
+}
+blockquote.alert-caution {
+    border-left-color: var(--red);
+    background: rgba(248, 113, 113, 0.08);
+}
+blockquote.alert-tip {
+    border-left-color: var(--green);
+    background: rgba(74, 222, 128, 0.08);
+}
+blockquote.alert-note {
+    border-left-color: var(--accent);
+    background: rgba(56, 189, 248, 0.08);
+}
+
+.alert-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    display: block;
+}
+.alert-important .alert-label { color: var(--purple); }
+.alert-warning .alert-label { color: var(--yellow); }
+.alert-caution .alert-label { color: var(--red); }
+.alert-tip .alert-label { color: var(--green); }
+.alert-note .alert-label { color: var(--accent); }
+
+hr {
+    border: none;
+    border-top: 1px solid var(--surface2);
+    margin: 35px 0;
+}
+
+.mermaid {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 8px;
+    padding: 25px;
+    margin: 20px 0;
+    text-align: center;
+    min-height: 100px;
+}
+
+@media print {
+    body { background: #fff; color: #1a1a1a; }
+    .container { max-width: 100%; padding: 20px; }
+    .cover { background: #f8f9fa; border-bottom-color: #333; page-break-after: always; }
+    .cover h1 { color: #1a365d; -webkit-text-fill-color: #1a365d; }
+    h1, h2, h3 { color: #1a365d; }
+    h2 { page-break-before: auto; }
+    table { font-size: 0.85em; }
+    thead th { background: #1a365d; }
+    pre, code { background: #f1f5f9; }
+    blockquote { background: #f8f9fa; }
+    .mermaid { background: #fff; border-color: #ddd; }
+    .mermaid svg { max-width: 100% !important; }
+}
+
+@media (max-width: 768px) {
+    .container { padding: 20px 15px; }
+    .cover h1 { font-size: 2em; }
+    table { font-size: 0.8em; }
+    thead th, tbody td { padding: 8px 10px; }
+}
+
+    </style>
+</head>
+<body>
+    <div class="cover">
+        <h1>Master Project Blueprint</h1>
+        <p class="subtitle">Complete architecture, module map, team roles, tech stack, and development roadmap for the API Security Testing Automation Platform</p>
+        <span class="badge">API Security Testing Automation Platform</span>
+    </div>
+    <div class="container">
+<h1 id="api-security-testing-automation-platform-master-blueprint">API Security Testing Automation Platform — Master Blueprint</h1>
+<blockquote class="alert-important"><span class="alert-label">IMPORTANT</span>This platform automatically discovers APIs, tests them for OWASP API Security Top 10 vulnerabilities, collects evidence, prioritizes findings, and generates developer-friendly remediation reports. This is NOT a UI mockup. It is a real, modular cybersecurity product.</blockquote>
+<h2 id="1-project-vision">1. PROJECT VISION</h2>
+<p>APIs are the #1 attack surface in modern applications. This platform aims to secure them by providing an automated, intelligent, and highly customizable security testing engine. It bridges the gap between security and engineering, offering actionable remediation alongside robust vulnerability detection.</p>
+<h2 id="2-system-architecture-high-level">2. SYSTEM ARCHITECTURE (High-Level)</h2>
+<div class="mermaid">
+graph TD
+    subgraph External["External Layer"]
+        TargetAPIs(("Target APIs - Authorized Only"))
+    end
+
+    subgraph FrontendUI["Frontend Layer"]
+        Dashboard["React/Next.js Dashboard"]
+        CLI["CLI Tool - Typer"]
+    end
+
+    subgraph Gateway["API Gateway Layer"]
+        Nginx["Nginx Reverse Proxy - TLS"]
+    end
+
+    subgraph Backend["Backend Layer - FastAPI"]
+        AuthAPI["Auth and RBAC"]
+        ProjectsAPI["Projects and Scans"]
+        ReportsAPI["Reporting Engine"]
+    end
+
+    subgraph Worker["Worker Layer - Celery"]
+        DiscoveryWorker["Discovery Tasks"]
+        ScanWorker["Scanning Engine"]
+        ReportWorker["Report Generation"]
+    end
+
+    subgraph Infra["Infrastructure Layer"]
+        PostgreSQL[("PostgreSQL")]
+        Redis[("Redis - Queue and Cache")]
+        FileStorage[("File Storage")]
+    end
+
+    Dashboard -->|HTTPS| Nginx
+    CLI -->|HTTPS| Nginx
+
+    Nginx --> AuthAPI
+    Nginx --> ProjectsAPI
+    Nginx --> ReportsAPI
+
+    AuthAPI --> PostgreSQL
+    ProjectsAPI --> PostgreSQL
+    ReportsAPI --> PostgreSQL
+
+    ProjectsAPI -->|Enqueue Task| Redis
+    Redis -->|Dequeue Task| Worker
+
+    Worker --> PostgreSQL
+    Worker --> FileStorage
+
+    ScanWorker -->|HTTP Requests| TargetAPIs
+    DiscoveryWorker -->|HTTP Requests| TargetAPIs
+</div>
+<h2 id="3-team-roles-responsibilities">3. TEAM ROLES & RESPONSIBILITIES</h2>
+<table>
+<thead><tr>
+<th>Role</th>
+<th>Team Member Responsibilities</th>
+<th>Key Modules</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>Software Architect</strong></td>
+<td>Overall architecture, module interfaces, tech decisions</td>
+<td>Architecture docs, all module interfaces</td>
+</tr>
+<tr>
+<td><strong>Cybersecurity Architect</strong></td>
+<td>OWASP test design, threat modeling, security controls</td>
+<td>Modules 16, 17, 20, 21, 34</td>
+</tr>
+<tr>
+<td><strong>Backend Engineer</strong></td>
+<td>API development, database, core engine</td>
+<td>Modules 1-14, 18-19</td>
+</tr>
+<tr>
+<td><strong>Frontend Engineer</strong></td>
+<td>Dashboard, UI components, data visualization</td>
+<td>Modules 23-25, 28</td>
+</tr>
+<tr>
+<td><strong>API Security Engineer</strong></td>
+<td>Test plugins, detection logic, evidence collection</td>
+<td>Modules 15-17, 22</td>
+</tr>
+<tr>
+<td><strong>DevSecOps Engineer</strong></td>
+<td>CI/CD, deployment, monitoring, Docker</td>
+<td>Modules 31-33</td>
+</tr>
+<tr>
+<td><strong>Database Architect</strong></td>
+<td>Schema design, migrations, optimization</td>
+<td>Database models for all modules</td>
+</tr>
+<tr>
+<td><strong>QA Engineer</strong></td>
+<td>Test plans, automation, security testing the tool itself</td>
+<td>All modules (testing)</td>
+</tr>
+</tbody></table>
+<h2 id="4-complete-module-map-34-modules">4. COMPLETE MODULE MAP (34 Modules)</h2>
+<div class="mermaid">
+flowchart TD
+    subgraph Foundation["Group A - Foundation Modules 1-5"]
+        M01("M01: User Management")
+        M02("M02: RBAC")
+        M03("M03: Project Management")
+        M04("M04: API Target Management")
+        M05("M05: Scope Management")
+        M01 --> M02 --> M03 --> M04 --> M05
+    end
+
+    subgraph Discovery["Group B - API Discovery Modules 6-10"]
+        M06("M06: OpenAPI/Swagger")
+        M07("M07: Postman Importer")
+        M08("M08: API Discovery Engine")
+        M09("M09: API Inventory")
+        M10("M10: Authentication Profile")
+        M06 --> M08
+        M07 --> M08
+        M08 --> M09
+    end
+
+    subgraph ScanEngine["Group C - Scan Engine Modules 11-14"]
+        M11("M11: HTTP Request Engine")
+        M12("M12: Request Mutation Engine")
+        M13("M13: Scan Configuration")
+        M14("M14: Scan Orchestrator")
+        M11 --> M12
+        M13 --> M14
+        M11 --> M14
+        M12 --> M14
+    end
+
+    subgraph SecurityTesting["Group D - Security Testing Modules 15-17"]
+        M15("M15: Security Test Framework")
+        M16("M16: OWASP API Security Tests")
+        M17("M17: Evidence Collection")
+        M15 --> M16 --> M17
+    end
+
+    subgraph FindingsRisk["Group E - Findings and Risk Modules 18-22"]
+        M18("M18: Finding Engine")
+        M19("M19: Finding Deduplication")
+        M20("M20: Risk Scoring")
+        M21("M21: Vulnerability Knowledge Base")
+        M22("M22: Remediation Engine")
+        M18 --> M19 --> M20
+        M21 --> M18
+        M21 --> M22
+        M20 --> M22
+    end
+
+    subgraph FrontendReports["Group F - Frontend and Reports Modules 23-28"]
+        M23("M23: Security Dashboard")
+        M24("M24: Scan Results Page")
+        M25("M25: Finding Details Page")
+        M26("M26: Report Generator")
+        M27("M27: Scan History")
+        M28("M28: Scan Comparison")
+        M27 --> M28
+    end
+
+    subgraph Ops["Group G - Operations Modules 29-34"]
+        M29("M29: Audit Logging")
+        M30("M30: CLI")
+        M31("M31: CI/CD Integration")
+        M32("M32: Monitoring")
+        M33("M33: Deployment")
+        M34("M34: Security Hardening")
+    end
+
+    M04 --> M06
+    M05 --> M06
+    M04 --> M07
+    M05 --> M07
+    M01 --> M10
+    M09 --> M11
+    M10 --> M11
+    M05 --> M11
+    M09 --> M13
+    M10 --> M13
+    M14 --> M15
+    M17 --> M18
+    M18 --> M23
+    M20 --> M23
+    M18 --> M24
+    M20 --> M24
+    M18 --> M25
+    M22 --> M26
+    M14 --> M27
+</div>
+<h2 id="5-tech-stack">5. TECH STACK</h2>
+<table>
+<thead><tr>
+<th>Layer</th>
+<th>Technology</th>
+<th>Version</th>
+<th>Purpose</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Language</td>
+<td>Python</td>
+<td>3.11+</td>
+<td>Core platform</td>
+</tr>
+<tr>
+<td>Backend Framework</td>
+<td>FastAPI</td>
+<td>Latest</td>
+<td>Async REST API server</td>
+</tr>
+<tr>
+<td>Task Queue</td>
+<td>Celery</td>
+<td>5.x</td>
+<td>Distributed background jobs</td>
+</tr>
+<tr>
+<td>Message Broker</td>
+<td>Redis</td>
+<td>7.x</td>
+<td>Task queue + caching</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>PostgreSQL</td>
+<td>16</td>
+<td>Primary data store</td>
+</tr>
+<tr>
+<td>ORM</td>
+<td>SQLAlchemy</td>
+<td>2.x</td>
+<td>Database models + queries</td>
+</tr>
+<tr>
+<td>Migrations</td>
+<td>Alembic</td>
+<td>Latest</td>
+<td>Database schema migrations</td>
+</tr>
+<tr>
+<td>HTTP Client</td>
+<td>httpx</td>
+<td>Latest</td>
+<td>Async HTTP for scanning</td>
+</tr>
+<tr>
+<td>Frontend</td>
+<td>React + Next.js</td>
+<td>14+</td>
+<td>Web dashboard</td>
+</tr>
+<tr>
+<td>UI Library</td>
+<td>Tailwind CSS + shadcn/ui</td>
+<td>Latest</td>
+<td>Component library</td>
+</tr>
+<tr>
+<td>Charts</td>
+<td>Recharts</td>
+<td>Latest</td>
+<td>Data visualization</td>
+</tr>
+<tr>
+<td>CLI</td>
+<td>Typer</td>
+<td>Latest</td>
+<td>Command-line interface</td>
+</tr>
+<tr>
+<td>Containerization</td>
+<td>Docker + Compose</td>
+<td>Latest</td>
+<td>Development & deployment</td>
+</tr>
+<tr>
+<td>Reverse Proxy</td>
+<td>Nginx</td>
+<td>Latest</td>
+<td>TLS, routing</td>
+</tr>
+<tr>
+<td>Report Engine</td>
+<td>Jinja2 + WeasyPrint</td>
+<td>Latest</td>
+<td>HTML/PDF reports</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>pytest + pytest-asyncio</td>
+<td>Latest</td>
+<td>Automated testing</td>
+</tr>
+<tr>
+<td>Linting</td>
+<td>Ruff + mypy</td>
+<td>Latest</td>
+<td>Code quality</td>
+</tr>
+<tr>
+<td>Auth</td>
+<td>PyJWT + passlib + bcrypt</td>
+<td>Latest</td>
+<td>Authentication</td>
+</tr>
+</tbody></table>
+<h2 id="6-database-architecture">6. DATABASE ARCHITECTURE</h2>
+<div class="mermaid">
+erDiagram
+    users {
+        int id PK
+        string email
+        string password_hash
+        int role_id FK
+        datetime created_at
+    }
+    roles {
+        int id PK
+        string name
+        jsonb permissions
+    }
+    projects {
+        int id PK
+        string name
+        int owner_id FK
+        string status
+        datetime created_at
+    }
+    targets {
+        int id PK
+        int project_id FK
+        string name
+        string base_url
+        string environment
+        string status
+    }
+    scopes {
+        int id PK
+        int target_id FK
+        jsonb allowed_domains
+        jsonb allowed_paths
+        jsonb blocked_paths
+        int rate_limit
+    }
+    api_endpoints {
+        int id PK
+        int target_id FK
+        string method
+        string path
+        jsonb parameters
+        boolean auth_required
+        string source
+        string status
+    }
+    auth_profiles {
+        int id PK
+        int target_id FK
+        string auth_type
+        string credentials_encrypted
+        string identity_role
+    }
+    scans {
+        int id PK
+        int project_id FK
+        int target_id FK
+        jsonb config
+        string status
+        datetime started_at
+        datetime completed_at
+    }
+    scan_jobs {
+        int id PK
+        int scan_id FK
+        int endpoint_id FK
+        int test_id FK
+        string status
+    }
+    findings {
+        int id PK
+        int scan_id FK
+        int endpoint_id FK
+        int test_id FK
+        string severity
+        string confidence
+        string status
+        int evidence_id FK
+    }
+    evidence {
+        int id PK
+        int finding_id FK
+        text request
+        text response
+        int status_code
+        datetime timestamp
+    }
+    risk_scores {
+        int id PK
+        int finding_id FK
+        string severity
+        string confidence
+        string exploitability
+        string impact
+        float score
+    }
+    remediation {
+        int id PK
+        int finding_id FK
+        text description
+        text code_guidance
+        text verification_steps
+    }
+    vuln_knowledge_base {
+        int id PK
+        string owasp_id
+        string name
+        text description
+        string severity
+        text remediation_template
+    }
+    reports {
+        int id PK
+        int scan_id FK
+        string format
+        string content_path
+        datetime created_at
+    }
+    audit_logs {
+        int id PK
+        int user_id FK
+        string action
+        string resource
+        datetime timestamp
+        text details
+    }
+
+    roles ||--o{ users : "has"
+    users ||--o{ projects : "owns"
+    projects ||--o{ targets : "contains"
+    targets ||--o| scopes : "defines"
+    targets ||--o{ api_endpoints : "has"
+    targets ||--o{ auth_profiles : "uses"
+    projects ||--o{ scans : "runs"
+    targets ||--o{ scans : "targeted_by"
+    scans ||--o{ scan_jobs : "executes"
+    scan_jobs ||--o| findings : "produces"
+    findings ||--o| evidence : "supported_by"
+    findings ||--o| risk_scores : "evaluated_by"
+    findings ||--o| remediation : "fixed_with"
+    vuln_knowledge_base ||--o{ findings : "references"
+    scans ||--o{ reports : "generates"
+    users ||--o{ audit_logs : "triggers"
+</div>
+<h2 id="7-end-to-end-workflow">7. END-TO-END WORKFLOW</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant U as User
+    participant F as Frontend
+    participant B as Backend
+    participant O as Orchestrator
+    participant SE as Scan Engine
+    participant TA as Target API
+
+    U->>F: Login
+    F->>B: Auth
+    U->>F: Create Project and Add Target
+    F->>B: Define Scope and Auth
+    U->>F: Import OpenAPI Spec
+    F->>B: Discover APIs then Build Inventory
+    U->>F: Configure and Start Scan
+    F->>B: Create Scan Job
+    B->>O: Initialize Scan Lifecycle
+    O->>SE: Load Tests and Credentials
+
+    loop For each endpoint and test
+        SE->>TA: Send Mutated Requests
+        TA-->>SE: HTTP Responses
+        SE->>SE: Analyze Response and OWASP Checks
+        alt Vulnerability Found
+            SE->>O: Collect Evidence and Create Finding
+        end
+    end
+
+    O->>B: Deduplicate Findings and Calc Risk
+    B->>B: Generate Remediation Guidance
+    B-->>F: Scan Complete
+
+    U->>F: View Dashboard and Findings
+    U->>F: Generate Report
+    F->>B: Create PDF/HTML Report
+    B-->>U: Download Report
+
+    Note over U,B: CI/CD Gate can trigger scans automatically via CLI
+</div>
+<h2 id="8-each-module-explained-for-team-members">8. EACH MODULE EXPLAINED (For Team Members)</h2>
+<h3 id="module-01-user-management">MODULE 01 — USER MANAGEMENT</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> None (first module)</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> User registration, login, logout, password handling, JWT tokens.</p>
+<p><strong>Why do we need it?</strong> Every action needs authentication. No platform works without users.</p>
+<p><strong>Key Components:</strong></p>
+<ul>
+<li>User model, password hashing (bcrypt)</li>
+<li>JWT auth, login/logout APIs, profile management</li>
+</ul>
+<p><strong>Data Flow:</strong></p>
+<p>Login Credentials → Auth Service → Validate Hash → Generate JWT → Return Token</p>
+<p><strong>Files to Create:</strong></p>
+<ul>
+<li>Backend: <code>src/modules/auth/models.py</code>, <code>src/modules/auth/router.py</code></li>
+<li>Frontend: <code>frontend/src/app/login/page.tsx</code></li>
+<li>Docs: <code>docs/modules/MODULE_01_USER_MANAGEMENT.md</code></li>
+</ul>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Users can register, login, get JWT, logout.</li>
+<li>[ ] Passwords hashed with bcrypt.</li>
+<li>[ ] Unauthorized access returns 401.</li>
+<li>[ ] Tests pass.</li>
+</ul>
+<h3 id="module-02-rbac">MODULE 02 — RBAC</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> Module 01</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Role-Based Access Control — Admin, Security Analyst, Developer, Viewer.</p>
+<p><strong>Why do we need it?</strong> Different team members need different permissions. A viewer shouldn't start scans.</p>
+<p><strong>Key Components:</strong></p>
+<ul>
+<li>Role model, Permission model, auth middleware, route protection</li>
+</ul>
+<p><strong>Data Flow:</strong></p>
+<p>User → Role → Permission → Resource → Action (allow/deny)</p>
+<p><strong>Files to Create:</strong></p>
+<ul>
+<li>Backend: <code>src/modules/rbac/...</code></li>
+</ul>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Roles enforced on all routes.</li>
+<li>[ ] Unprivileged users blocked.</li>
+<li>[ ] Tests for each role.</li>
+</ul>
+<h3 id="module-03-project-management">MODULE 03 — PROJECT MANAGEMENT</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 01, 02</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Create/manage security testing engagements (e.g. "Banking API Audit Q3").</p>
+<p><strong>Why do we need it?</strong> Organizes targets, scans, findings under a single project umbrella.</p>
+<p><strong>Key Components:</strong></p>
+<ul>
+<li>Project CRUD, project dashboard, project→targets→scans→findings→reports hierarchy</li>
+</ul>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Projects created, updated, archived.</li>
+<li>[ ] Dashboard shows project summary.</li>
+<li>[ ] Tests pass.</li>
+</ul>
+<h3 id="module-04-api-target-management">MODULE 04 — API TARGET MANAGEMENT</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> Module 03</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Register authorized API targets (e.g. https://api.example.local).</p>
+<p><strong>Why do we need it?</strong> The scanner must know WHAT to test and must only test AUTHORIZED targets.</p>
+<p><strong>Key Components:</strong></p>
+<ul>
+<li>Target model (name, base_url, environment, scope, auth_profile, status)</li>
+<li>Target CRUD, validation</li>
+</ul>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Targets registered with URL validation.</li>
+<li>[ ] Scope tied to target.</li>
+<li>[ ] Tests pass.</li>
+</ul>
+<h3 id="module-05-scope-management">MODULE 05 — SCOPE MANAGEMENT</h3>
+<p><strong>Owner:</strong> Cybersecurity Architect + Backend Engineer</p>
+<p><strong>Dependencies:</strong> Module 04</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Define what the scanner IS and IS NOT allowed to test.</p>
+<p><strong>Why do we need it?</strong> CRITICAL SAFETY — prevents scanning unauthorized domains/paths. Legal requirement.</p>
+<p><strong>Key Components:</strong></p>
+<ul>
+<li>Allowed domains, allowed/blocked paths, allowed methods, rate limits, request limits</li>
+</ul>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Scanner refuses out-of-scope requests.</li>
+<li>[ ] Bypass tests written and passing.</li>
+<li>[ ] Rate limits enforced.</li>
+</ul>
+<h3 id="module-06-openapi-swagger-importer">MODULE 06 — OPENAPI/SWAGGER IMPORTER</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 04, 05</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Upload/import OpenAPI specs to auto-discover API endpoints.</p>
+<p><strong>Why do we need it?</strong> Most APIs have OpenAPI docs. This is the fastest discovery method.</p>
+<p><strong>Data Flow:</strong></p>
+<p>Upload File → Parse → Validate → Extract Endpoints → Extract Parameters → Extract Schemas → API Inventory</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] OpenAPI 3.x and Swagger 2.0 parsed.</li>
+<li>[ ] Endpoints, params, schemas extracted.</li>
+<li>[ ] Invalid specs rejected. Tests pass.</li>
+</ul>
+<h3 id="module-07-postman-importer">MODULE 07 — POSTMAN IMPORTER</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 04, 05</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Import Postman collections to discover APIs.</p>
+<p><strong>Why do we need it?</strong> Many teams use Postman. Importing collections provides instant API inventory.</p>
+<p><strong>Data Flow:</strong></p>
+<p>Upload Collection → Parse → Extract Folders → Extract Requests → Normalize → API Inventory</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Postman v2.1 collections parsed.</li>
+<li>[ ] Requests normalized to inventory format.</li>
+<li>[ ] Tests pass.</li>
+</ul>
+<h3 id="module-08-api-discovery-engine">MODULE 08 — API DISCOVERY ENGINE</h3>
+<p><strong>Owner:</strong> Backend Engineer + API Security Engineer</p>
+<p><strong>Dependencies:</strong> Modules 06, 07, 09</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Central engine that merges all discovery sources and deduplicates.</p>
+<p><strong>Why do we need it?</strong> APIs come from multiple sources. Need one unified, clean inventory.</p>
+<p><strong>Data Flow:</strong></p>
+<p>Sources → Endpoint Parser → Normalizer → Deduplicator → Inventory</p>
+<p><em>(Example: GET /users, GET /users/, GET /api/users all normalize to one entry)</em></p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Multiple sources merged.</li>
+<li>[ ] Duplicates removed.</li>
+<li>[ ] Normalization rules applied. Tests pass.</li>
+</ul>
+<h3 id="module-09-api-inventory">MODULE 09 — API INVENTORY</h3>
+<p><strong>Owner:</strong> Backend Engineer + Frontend Engineer</p>
+<p><strong>Dependencies:</strong> Module 08</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Central catalog of all discovered API endpoints.</p>
+<p><strong>What stores:</strong> Method, Path, Parameters, Headers, Request/Response schemas, Auth requirements, Source, Status.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] All endpoints cataloged.</li>
+<li>[ ] Search and filter working.</li>
+<li>[ ] UI shows inventory. Tests pass.</li>
+</ul>
+<h3 id="module-10-authentication-profile">MODULE 10 — AUTHENTICATION PROFILE</h3>
+<p><strong>Owner:</strong> API Security Engineer + Backend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 01, 04</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Manage auth credentials for target APIs (API keys, JWT, OAuth2).</p>
+<p><strong>Why do we need it?</strong> Scanner needs credentials to test authenticated endpoints. Must support multiple identities.</p>
+<blockquote class="alert-caution"><span class="alert-label">CAUTION</span>Never store secrets plaintext. Encrypt at rest.</blockquote>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Auth profiles created.</li>
+<li>[ ] Secrets encrypted.</li>
+<li>[ ] Multiple identities supported. Tests pass.</li>
+</ul>
+<h3 id="module-11-http-request-engine">MODULE 11 — HTTP REQUEST ENGINE</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 05, 09, 10</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Core communication layer that sends HTTP requests to target APIs.</p>
+<p><strong>Data Flow:</strong></p>
+<p>Test Module → Request Builder → Auth Injection → Scope Validation → Rate Limit Check → httpx Client → Target API → Response → Response Analyzer</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] All HTTP methods work.</li>
+<li>[ ] Scope enforced.</li>
+<li>[ ] Rate limits work.</li>
+<li>[ ] Auth injected. Tests pass.</li>
+</ul>
+<h3 id="module-12-request-mutation-engine">MODULE 12 — REQUEST MUTATION ENGINE</h3>
+<p><strong>Owner:</strong> API Security Engineer</p>
+<p><strong>Dependencies:</strong> Module 11</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Creates controlled variations of requests for security testing.</p>
+<p><strong>Data Flow:</strong></p>
+<p>Original Request → Mutation Strategy → Modified Request → Send → Compare Responses</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Mutations modular and reusable (tampering, manipulation).</li>
+<li>[ ] Each mutation type tested.</li>
+<li>[ ] Comparison logic works.</li>
+</ul>
+<h3 id="module-13-scan-configuration">MODULE 13 — SCAN CONFIGURATION</h3>
+<p><strong>Owner:</strong> Backend Engineer + Frontend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 04, 05, 09, 10</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Configure a security scan (target, scope, auth, test selection, rate limits, concurrency, safe mode).</p>
+<p><strong>Why do we need it?</strong> Every scan needs customization. Teams want to choose which tests to run.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Configuration UI works.</li>
+<li>[ ] All options validated.</li>
+<li>[ ] Safe defaults applied. Tests pass.</li>
+</ul>
+<h3 id="module-14-scan-orchestrator">MODULE 14 — SCAN ORCHESTRATOR</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 11, 12, 13</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> The brain that controls the entire scan lifecycle.</p>
+<p><strong>Data Flow:</strong></p>
+<p>Create Scan → Validate Config → Load Inventory → Load Credentials → Select Tests → Create Jobs → Queue to Celery → Execute → Collect Evidence → Generate Findings → Calculate Risk → Generate Remediation → Complete</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Full scan lifecycle works end-to-end.</li>
+<li>[ ] Progress tracked. Cancellation works.</li>
+<li>[ ] Failures handled. Tests pass.</li>
+</ul>
+<h3 id="module-15-security-test-framework">MODULE 15 — SECURITY TEST FRAMEWORK</h3>
+<p><strong>Owner:</strong> API Security Engineer</p>
+<p><strong>Dependencies:</strong> Module 14</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Plugin architecture for security tests. Every test extends SecurityTestPlugin.</p>
+<p><strong>Why do we need it?</strong> Makes adding new tests easy. Standardizes test structure.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Base class defined (<code>prepare()</code> → <code>execute()</code> → <code>analyze()</code> → <code>collect_evidence()</code> → <code>create_finding()</code>).</li>
+<li>[ ] Plugin registration works.</li>
+<li>[ ] At least one test plugin runs through framework. Tests pass.</li>
+</ul>
+<h3 id="module-16-owasp-api-security-tests">MODULE 16 — OWASP API SECURITY TESTS</h3>
+<p><strong>Owner:</strong> API Security Engineer + Cybersecurity Architect</p>
+<p><strong>Dependencies:</strong> Module 15</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> The actual security tests for all 10 OWASP categories plus supporting checks.</p>
+<p><strong>Categories:</strong> BOLA, Broken Auth, BOPLA, Unrestricted Resource Consumption, BFLA, SSRF, Security Misconfiguration, Improper Inventory Management, Unsafe Consumption.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Each test has detection logic, evidence collection, confidence, severity, remediation.</li>
+<li>[ ] All tested against vulnerable lab API.</li>
+</ul>
+<h3 id="module-17-evidence-collection">MODULE 17 — EVIDENCE COLLECTION</h3>
+<p><strong>Owner:</strong> API Security Engineer</p>
+<p><strong>Dependencies:</strong> Module 16</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Stores proof for every finding.</p>
+<blockquote class="alert-warning"><span class="alert-label">WARNING</span>Avoid storing secrets in evidence. Sanitize sensitive data before storage.</blockquote>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Evidence stored for every finding.</li>
+<li>[ ] Sanitization applied. Storage secure. Tests pass.</li>
+</ul>
+<h3 id="module-18-finding-engine">MODULE 18 — FINDING ENGINE</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> Module 17</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Converts test results + evidence into standardized findings with lifecycle.</p>
+<p><em>(Lifecycle: New → Confirmed → False Positive → Accepted Risk → Resolved)</em></p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Findings created from test results.</li>
+<li>[ ] Lifecycle transitions work. Status tracking works. Tests pass.</li>
+</ul>
+<h3 id="module-19-finding-deduplication">MODULE 19 — FINDING DEDUPLICATION</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> Module 18</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Prevents hundreds of duplicate findings for the same root cause.</p>
+<p><em>(Example: Same BOLA vuln on same endpoint with same parameter = 1 finding, not 100)</em></p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Duplicates detected and merged.</li>
+<li>[ ] Correlation logic tested. Tests pass.</li>
+</ul>
+<h3 id="module-20-risk-scoring">MODULE 20 — RISK SCORING</h3>
+<p><strong>Owner:</strong> Cybersecurity Architect</p>
+<p><strong>Dependencies:</strong> Module 19</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Professional risk model considering severity, confidence, exploitability, impact, auth requirements, data sensitivity.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Risk scores calculated.</li>
+<li>[ ] Scoring model documented. Examples provided. Tests pass.</li>
+</ul>
+<h3 id="module-21-vulnerability-knowledge-base">MODULE 21 — VULNERABILITY KNOWLEDGE BASE</h3>
+<p><strong>Owner:</strong> Cybersecurity Architect</p>
+<p><strong>Dependencies:</strong> None (data module)</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Structured database of vulnerability definitions.</p>
+<p><strong>Why do we need it?</strong> Data-driven, not hardcoded. Tests reference KB entries instead of embedding descriptions.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] All OWASP categories defined.</li>
+<li>[ ] KB queryable. Tests reference KB. Tests pass.</li>
+</ul>
+<h3 id="module-22-remediation-engine">MODULE 22 — REMEDIATION ENGINE</h3>
+<p><strong>Owner:</strong> API Security Engineer</p>
+<p><strong>Dependencies:</strong> Modules 18, 20, 21</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Generates developer-friendly fix guidance for every finding. Includes what happened, why it matters, impact, how to fix.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Remediation generated for every finding.</li>
+<li>[ ] Guidance is specific (not generic). Tests pass.</li>
+</ul>
+<h3 id="module-23-security-dashboard">MODULE 23 — SECURITY DASHBOARD</h3>
+<p><strong>Owner:</strong> Frontend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 18, 20</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Main dashboard showing total endpoints, scan status, findings by severity, OWASP coverage, risk score, trends.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Dashboard renders all metrics.</li>
+<li>[ ] Charts work. Data updates in real-time. Responsive design. Tests pass.</li>
+</ul>
+<h3 id="module-24-scan-results-page">MODULE 24 — SCAN RESULTS PAGE</h3>
+<p><strong>Owner:</strong> Frontend Engineer</p>
+<p><strong>Dependencies:</strong> Module 18</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Results page with search, filtering (severity, OWASP category, endpoint, status, confidence).</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] All filters work. Search works. Pagination works. Tests pass.</li>
+</ul>
+<h3 id="module-25-finding-details-page">MODULE 25 — FINDING DETAILS PAGE</h3>
+<p><strong>Owner:</strong> Frontend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 18, 17, 22</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Detailed view of a single finding.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] All fields displayed.</li>
+<li>[ ] Evidence shown safely. Remediation actionable. Tests pass.</li>
+</ul>
+<h3 id="module-26-report-generator">MODULE 26 — REPORT GENERATOR</h3>
+<p><strong>Owner:</strong> Backend Engineer + Frontend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 18, 20, 22</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Generate HTML, JSON, PDF reports. Report types: Developer Report, Security Report, Executive Report.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] All 3 report types generated.</li>
+<li>[ ] All 3 formats work. Reports include all required sections. Tests pass.</li>
+</ul>
+<h3 id="module-27-scan-history">MODULE 27 — SCAN HISTORY</h3>
+<p><strong>Owner:</strong> Backend Engineer + Frontend Engineer</p>
+<p><strong>Dependencies:</strong> Module 14</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Historical record of all scans.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] History stored and queryable.</li>
+<li>[ ] UI shows history list. Tests pass.</li>
+</ul>
+<h3 id="module-28-scan-comparison">MODULE 28 — SCAN COMPARISON</h3>
+<p><strong>Owner:</strong> Frontend Engineer + Backend Engineer</p>
+<p><strong>Dependencies:</strong> Module 27</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Compare two scans to show new, resolved, persistent vulnerabilities.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Comparison API works. Diff visualization works. Tests pass.</li>
+</ul>
+<h3 id="module-29-audit-logging">MODULE 29 — AUDIT LOGGING</h3>
+<p><strong>Owner:</strong> Backend Engineer</p>
+<p><strong>Dependencies:</strong> Modules 01, 02</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Tamper-resistant log of all important actions.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] All critical actions logged. Logs tamper-resistant. Queryable. Tests pass.</li>
+</ul>
+<h3 id="module-30-cli">MODULE 30 — CLI</h3>
+<p><strong>Owner:</strong> DevSecOps Engineer</p>
+<p><strong>Dependencies:</strong> Backend API</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Command-line interface for automation.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] All commands work (api-sec project, target, scan, etc.).</li>
+<li>[ ] Help text clear. Output formatted. Tests pass.</li>
+</ul>
+<h3 id="module-31-ci-cd-integration">MODULE 31 — CI/CD INTEGRATION</h3>
+<p><strong>Owner:</strong> DevSecOps Engineer</p>
+<p><strong>Dependencies:</strong> Modules 30, 26</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> GitHub Actions, GitLab CI, Jenkins integration with configurable security gates.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] CI Workflows operate correctly. Security gates configurable. Tests pass.</li>
+</ul>
+<h3 id="module-32-monitoring">MODULE 32 — MONITORING</h3>
+<p><strong>Owner:</strong> DevSecOps Engineer</p>
+<p><strong>Dependencies:</strong> Modules 14, 33</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Monitor scan jobs, worker health, API performance, errors, queue length, DB health.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] Health endpoints work. Structured logs configured. Metrics exported. Tests pass.</li>
+</ul>
+<h3 id="module-33-deployment">MODULE 33 — DEPLOYMENT</h3>
+<p><strong>Owner:</strong> DevSecOps Engineer</p>
+<p><strong>Dependencies:</strong> All modules</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Docker Compose for dev, production architecture.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] <code>docker-compose up</code> starts everything.</li>
+<li>[ ] Production config documented. TLS configured. Tests pass.</li>
+</ul>
+<h3 id="module-34-security-hardening">MODULE 34 — SECURITY HARDENING</h3>
+<p><strong>Owner:</strong> Cybersecurity Architect + QA Engineer</p>
+<p><strong>Dependencies:</strong> All modules</p>
+<p><strong>Status:</strong> Not Started</p>
+<p><strong>What is this?</strong> Security test the platform itself.</p>
+<p><strong>Definition of Done:</strong></p>
+<ul>
+<li>[ ] All self-security tests pass.</li>
+<li>[ ] No critical/high findings in the platform itself. Report generated.</li>
+</ul>
+<h2 id="9-development-phases-timeline">9. DEVELOPMENT PHASES & TIMELINE</h2>
+<div class="mermaid">
+gantt
+    title Development Phases and Timeline
+    dateFormat  YYYY-MM-DD
+    axisFormat  W%W
+    
+    section Foundation
+    Phase 1 (M1-M5)           :a1, 2026-08-31, 21d
+    
+    section Discovery
+    Phase 2 (M6-M10)          :a2, after a1, 14d
+    
+    section Scan Engine
+    Phase 3 (M11-M14)         :a3, after a2, 14d
+    
+    section Sec Testing
+    Phase 4 (M15-M17, M21)    :a4, after a3, 21d
+    
+    section Findings
+    Phase 5 (M18-M22)         :a5, after a4, 14d
+    
+    section Frontend
+    Phase 6 (M23-M28)         :a6, after a5, 21d
+    
+    section Operations
+    Phase 7 (M29-M33)         :a7, after a6, 14d
+    
+    section Hardening
+    Phase 8 (M34 + QA)        :a8, after a7, 14d
+</div>
+<h2 id="10-project-directory-structure">10. PROJECT DIRECTORY STRUCTURE</h2>
+<pre><code class="language-text">api-security-platform/
+├── docker-compose.yml
+├── docker-compose.prod.yml
+├── Dockerfile.backend
+├── Dockerfile.frontend
+├── Dockerfile.worker
+├── nginx.conf
+├── .env.example
+├── .github/workflows/ci.yml
+│
+├── backend/
+│   ├── pyproject.toml
+│   ├── alembic.ini
+│   ├── alembic/
+│   ├── src/
+│   │   ├── main.py
+│   │   ├── config.py
+│   │   ├── database.py
+│   │   ├── dependencies.py
+│   │   │
+│   │   ├── auth/
+│   │   │   ├── models.py
+│   │   │   ├── schemas.py
+│   │   │   ├── router.py
+│   │   │   ├── service.py
+│   │   │   └── utils.py
+│   │   │
+│   │   ├── rbac/
+│   │   ├── projects/
+│   │   ├── targets/
+│   │   ├── scopes/
+│   │   ├── importers/
+│   │   │   ├── openapi_importer.py
+│   │   │   └── postman_importer.py
+│   │   ├── discovery/
+│   │   ├── inventory/
+│   │   ├── auth_profiles/
+│   │   ├── http_engine/
+│   │   ├── mutation_engine/
+│   │   ├── scan_config/
+│   │   ├── orchestrator/
+│   │   ├── test_framework/
+│   │   ├── owasp_tests/
+│   │   │   ├── base.py
+│   │   │   ├── bola.py
+│   │   │   ├── broken_auth.py
+│   │   │   ├── bopla.py
+│   │   │   ├── rate_limit.py
+│   │   │   ├── bfla.py
+│   │   │   ├── business_flow.py
+│   │   │   ├── ssrf.py
+│   │   │   ├── misconfiguration.py
+│   │   │   ├── inventory_mgmt.py
+│   │   │   └── unsafe_consumption.py
+│   │   ├── evidence/
+│   │   ├── findings/
+│   │   ├── deduplication/
+│   │   ├── risk/
+│   │   ├── knowledge_base/
+│   │   ├── remediation/
+│   │   ├── reports/
+│   │   ├── history/
+│   │   ├── comparison/
+│   │   ├── audit/
+│   │   └── monitoring/
+│   │
+│   ├── workers/
+│   │   ├── celery_app.py
+│   │   ├── scan_tasks.py
+│   │   ├── discovery_tasks.py
+│   │   └── report_tasks.py
+│   │
+│   └── tests/
+│
+├── frontend/
+│   ├── package.json
+│   ├── next.config.js
+│   ├── tailwind.config.js
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── login/
+│   │   │   ├── dashboard/
+│   │   │   ├── projects/
+│   │   │   ├── targets/
+│   │   │   ├── inventory/
+│   │   │   ├── scans/
+│   │   │   ├── findings/
+│   │   │   ├── reports/
+│   │   │   └── settings/
+│   │   ├── components/
+│   │   └── lib/
+│   └── tests/
+│
+├── cli/
+│   ├── pyproject.toml
+│   └── src/
+│       └── api_sec/
+│
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── MODULE_ARCHITECTURE.md
+│   ├── TECH_STACK.md
+│   ├── DATABASE.md
+│   ├── API.md
+│   ├── SECURITY.md
+│   ├── TESTING.md
+│   ├── DEPLOYMENT.md
+│   ├── OWASP_COVERAGE.md
+│   ├── CLI.md
+│   ├── DEVELOPMENT.md
+│   ├── ROADMAP.md
+│   └── modules/
+│       ├── MODULE_01_USER_MANAGEMENT.md
+│       ├── MODULE_02_RBAC.md
+│       ├── ...
+│       └── MODULE_34_SECURITY_HARDENING.md
+│
+└── test-lab/
+    ├── vulnerable-api/
+    └── docker-compose.lab.yml</code></pre>
+<h2 id="11-safety-requirements">11. SAFETY REQUIREMENTS</h2>
+<blockquote class="alert-caution"><span class="alert-label">CAUTION</span>- This platform is ONLY for authorized security testing<br>- Target authorization controls built into Module 05<br>- Scope restrictions prevent scanning unauthorized targets<br>- Safe testing mode available (non-destructive defaults)<br>- Rate limiting prevents DoS<br>- Audit logging tracks all actions<br>- Authentication controls on all operations<br>- Secret protection (encryption at rest)<br>- Scan cancellation available at any time<br>- Use vulnerable lab APIs for development/testing</blockquote>
+<h2 id="12-module-completion-workflow">12. MODULE COMPLETION WORKFLOW</h2>
+<div class="mermaid">
+flowchart LR
+    P[PLAN] --> E[EXPLAIN]
+    E --> D[DESIGN]
+    D --> I[IMPLEMENT]
+    I --> T[TEST]
+    T --> F[FIX]
+    F --> I
+    T --> IN[INTEGRATE]
+    IN --> DOC[DOCUMENT]
+    DOC --> V[VERIFY]
+    V --> C([MARK COMPLETE])
+</div>
+<blockquote class="alert-note"><span class="alert-label">NOTE</span>Never mark a module complete just because code was generated. Tests MUST pass.</blockquote>
+<h2 id="13-phase-reporting-format">13. PHASE REPORTING FORMAT</h2>
+<p>After each phase, the team reports:</p>
+<ul>
+<li><strong>PHASE:</strong> [name]</li>
+<li><strong>STATUS:</strong> Complete/In Progress</li>
+<li><strong>Completed:</strong> [list]</li>
+<li><strong>In Progress:</strong> [list]</li>
+<li><strong>Tests:</strong> pass/fail counts</li>
+<li><strong>Files Created:</strong> [list]</li>
+<li><strong>Files Modified:</strong> [list]</li>
+<li><strong>Security Considerations:</strong> [list]</li>
+<li><strong>Next Phase:</strong> [name]</li>
+<li><strong>Remaining:</strong> [list]</li>
+</ul>
+    </div>
+    <div style="text-align:center; padding:40px; color:var(--text-muted); font-size:0.85em; border-top:1px solid var(--surface2); margin-top:60px;">
+        <p>API Security Testing Automation Platform &mdash; Project Blueprint</p>
+        <p style="margin-top:8px;">To save as PDF: Open in browser &rarr; Ctrl+P &rarr; Save as PDF</p>
+    </div>
+
+    <!-- Mermaid.js for rendering diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            themeVariables: {
+                primaryColor: '#1e3a5f',
+                primaryTextColor: '#e2e8f0',
+                primaryBorderColor: '#38bdf8',
+                lineColor: '#64748b',
+                secondaryColor: '#2d1b69',
+                tertiaryColor: '#1e293b',
+                noteBkgColor: '#334155',
+                noteTextColor: '#e2e8f0',
+                actorTextColor: '#e2e8f0',
+                actorBkg: '#1e3a5f',
+                actorBorder: '#38bdf8',
+                signalColor: '#94a3b8',
+                signalTextColor: '#e2e8f0',
+                labelBoxBkgColor: '#1e293b',
+                labelBoxBorderColor: '#475569',
+                labelTextColor: '#e2e8f0',
+                loopTextColor: '#e2e8f0',
+                activationBorderColor: '#38bdf8',
+                activationBkgColor: '#1e3a5f',
+                sequenceNumberColor: '#0f172a',
+                fontFamily: 'Segoe UI, system-ui, sans-serif',
+                fontSize: '14px',
+                entityRelationship: {
+                    useMaxWidth: true
+                }
+            },
+            er: {
+                useMaxWidth: true,
+                fontSize: 12
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                useMaxWidth: true,
+                showSequenceNumbers: false
+            },
+            gantt: {
+                useMaxWidth: true,
+                fontSize: 12
+            }
+        });
+    </script>
+</body>
+</html>
