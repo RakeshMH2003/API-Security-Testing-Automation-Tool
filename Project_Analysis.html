@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Analysis &amp; Research</title>
+    <style>
+
+:root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface2: #334155;
+    --border: #475569;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --green: #4ade80;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --orange: #fb923c;
+    --purple: #c084fc;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 30px;
+}
+
+.cover {
+    text-align: center;
+    padding: 80px 20px 60px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    border-bottom: 3px solid var(--accent);
+    margin-bottom: 40px;
+}
+.cover h1 {
+    font-size: 2.8em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+.cover .subtitle {
+    font-size: 1.2em;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+}
+.cover .badge {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 6px 20px;
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    color: var(--accent);
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.2em;
+    color: var(--accent);
+    margin: 50px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--surface2);
+}
+h2 {
+    font-size: 1.6em;
+    color: var(--accent);
+    margin: 45px 0 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--surface2);
+}
+h3 {
+    font-size: 1.25em;
+    color: var(--accent2);
+    margin: 30px 0 12px;
+}
+h4 {
+    font-size: 1.05em;
+    color: var(--purple);
+    margin: 20px 0 8px;
+}
+
+p { margin: 10px 0; color: var(--text); }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: var(--surface);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.92em;
+}
+thead th {
+    background: linear-gradient(135deg, #1e3a5f, #2d1b69);
+    color: #fff;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+tbody td {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--surface2);
+    color: var(--text);
+}
+tbody tr:hover { background: var(--surface2); }
+tbody tr:last-child td { border-bottom: none; }
+
+code {
+    background: var(--surface2);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.88em;
+    color: var(--green);
+}
+pre {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 15px 0;
+    overflow-x: auto;
+    font-size: 0.85em;
+    line-height: 1.6;
+}
+pre code {
+    background: none;
+    padding: 0;
+    color: var(--text);
+}
+
+ul, ol {
+    margin: 10px 0 10px 25px;
+}
+li {
+    margin: 5px 0;
+    color: var(--text);
+}
+li strong { color: var(--accent); }
+
+blockquote {
+    border-left: 4px solid var(--accent);
+    background: var(--surface);
+    padding: 15px 20px;
+    margin: 15px 0;
+    border-radius: 0 8px 8px 0;
+}
+blockquote.alert-important {
+    border-left-color: var(--purple);
+    background: rgba(192, 132, 252, 0.08);
+}
+blockquote.alert-warning {
+    border-left-color: var(--yellow);
+    background: rgba(251, 191, 36, 0.08);
+}
+blockquote.alert-caution {
+    border-left-color: var(--red);
+    background: rgba(248, 113, 113, 0.08);
+}
+blockquote.alert-tip {
+    border-left-color: var(--green);
+    background: rgba(74, 222, 128, 0.08);
+}
+blockquote.alert-note {
+    border-left-color: var(--accent);
+    background: rgba(56, 189, 248, 0.08);
+}
+
+.alert-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    display: block;
+}
+.alert-important .alert-label { color: var(--purple); }
+.alert-warning .alert-label { color: var(--yellow); }
+.alert-caution .alert-label { color: var(--red); }
+.alert-tip .alert-label { color: var(--green); }
+.alert-note .alert-label { color: var(--accent); }
+
+hr {
+    border: none;
+    border-top: 1px solid var(--surface2);
+    margin: 35px 0;
+}
+
+.mermaid {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 8px;
+    padding: 25px;
+    margin: 20px 0;
+    text-align: center;
+    min-height: 100px;
+}
+
+@media print {
+    body { background: #fff; color: #1a1a1a; }
+    .container { max-width: 100%; padding: 20px; }
+    .cover { background: #f8f9fa; border-bottom-color: #333; page-break-after: always; }
+    .cover h1 { color: #1a365d; -webkit-text-fill-color: #1a365d; }
+    h1, h2, h3 { color: #1a365d; }
+    h2 { page-break-before: auto; }
+    table { font-size: 0.85em; }
+    thead th { background: #1a365d; }
+    pre, code { background: #f1f5f9; }
+    blockquote { background: #f8f9fa; }
+    .mermaid { background: #fff; border-color: #ddd; }
+    .mermaid svg { max-width: 100% !important; }
+}
+
+@media (max-width: 768px) {
+    .container { padding: 20px 15px; }
+    .cover h1 { font-size: 2em; }
+    table { font-size: 0.8em; }
+    thead th, tbody td { padding: 8px 10px; }
+}
+
+    </style>
+</head>
+<body>
+    <div class="cover">
+        <h1>Project Analysis &amp; Research</h1>
+        <p class="subtitle">Initial project analysis covering OWASP API Top 10, system architecture, tech stack recommendations, and competitive landscape</p>
+        <span class="badge">API Security Testing Automation Platform</span>
+    </div>
+    <div class="container">
+<h1 id="api-security-testing-automation-tool-project-analysis">API Security Testing Automation Tool — Project Analysis</h1>
+<h2 id="1-problem-statement-breakdown">1. Problem Statement Breakdown</h2>
+<p>APIs are the <strong>#1 attack surface</strong> in modern applications. The tool must solve three core problems:</p>
+<table>
+<thead><tr>
+<th>Problem</th>
+<th>What It Means</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>API Discovery</strong></td>
+<td>Automatically find all APIs in a target application — including undocumented "shadow" and deprecated "zombie" APIs</td>
+</tr>
+<tr>
+<td><strong>Vulnerability Testing</strong></td>
+<td>Test every discovered API against the OWASP API Security Top 10 (2023)</td>
+</tr>
+<tr>
+<td><strong>Remediation Reporting</strong></td>
+<td>Generate developer-friendly reports with actionable fix guidance, not just vulnerability dumps</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="2-owasp-api-security-top-10-2023-the-vulnerability-targets">2. OWASP API Security Top 10 (2023) — The Vulnerability Targets</h2>
+<p>Each of these must have dedicated test modules in the tool:</p>
+<table>
+<thead><tr>
+<th>#</th>
+<th>Vulnerability</th>
+<th>Description</th>
+<th>Test Approach</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>API1</td>
+<td><strong>Broken Object Level Authorization (BOLA)</strong></td>
+<td>Manipulating object IDs to access other users' data</td>
+<td>Swap object IDs across user sessions, check for unauthorized access</td>
+</tr>
+<tr>
+<td>API2</td>
+<td><strong>Broken Authentication</strong></td>
+<td>Weak auth mechanisms, token leaks, missing validation</td>
+<td>Test weak passwords, token expiry, brute force, missing auth headers</td>
+</tr>
+<tr>
+<td>API3</td>
+<td><strong>Broken Object Property Level Authorization (BOPLA)</strong></td>
+<td>Exposing/modifying unauthorized object properties (mass assignment)</td>
+<td>Send extra fields in requests, check if server accepts unauthorized properties</td>
+</tr>
+<tr>
+<td>API4</td>
+<td><strong>Unrestricted Resource Consumption</strong></td>
+<td>No rate limiting → DoS or cost abuse</td>
+<td>Send rapid requests, large payloads, check for rate limit headers</td>
+</tr>
+<tr>
+<td>API5</td>
+<td><strong>Broken Function Level Authorization (BFLA)</strong></td>
+<td>Unprivileged users accessing admin functions</td>
+<td>Call admin endpoints with regular user tokens</td>
+</tr>
+<tr>
+<td>API6</td>
+<td><strong>Unrestricted Access to Sensitive Business Flows</strong></td>
+<td>Bots exploiting business logic (mass purchases, signups)</td>
+<td>Automate business flows, check for anti-automation controls</td>
+</tr>
+<tr>
+<td>API7</td>
+<td><strong>Server Side Request Forgery (SSRF)</strong></td>
+<td>Coercing the API into making internal requests</td>
+<td>Inject internal URLs/IPs in URL parameters, check for internal responses</td>
+</tr>
+<tr>
+<td>API8</td>
+<td><strong>Security Misconfiguration</strong></td>
+<td>Default configs, verbose errors, overly permissive CORS</td>
+<td>Check CORS headers, error verbosity, HTTP methods, TLS, default creds</td>
+</tr>
+<tr>
+<td>API9</td>
+<td><strong>Improper Inventory Management</strong></td>
+<td>Lack of API versioning visibility, shadow APIs</td>
+<td>Probe for old API versions (<code>/v1/</code>, <code>/v2/</code>), undocumented endpoints</td>
+</tr>
+<tr>
+<td>API10</td>
+<td><strong>Unsafe Consumption of APIs</strong></td>
+<td>Trusting third-party API data without validation</td>
+<td>Intercept third-party responses, inject malicious payloads</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-proposed-system-architecture">3. Proposed System Architecture</h2>
+<div class="mermaid">
+graph TB
+    subgraph "User Interface"
+        CLI["CLI Interface"]
+        WEB["Web Dashboard<br/>(React/Next.js)"]
+    end
+
+    subgraph "Core Engine (FastAPI)"
+        API["FastAPI Server"]
+        AUTH["Auth & Project Mgmt"]
+        SCHED["Scan Scheduler"]
+    end
+
+    subgraph "Discovery Layer"
+        SPEC["Spec Parser<br/>(OpenAPI/Swagger/GraphQL)"]
+        CRAWL["Traffic Crawler<br/>(Proxy-based)"]
+        CODE["Code Scanner<br/>(Repository Analysis)"]
+    end
+
+    subgraph "Testing Engine"
+        FUZZ["Fuzzer Engine"]
+        BOLA["BOLA Tester"]
+        AUTHTEST["Auth Tester"]
+        BOPLA["BOPLA Tester"]
+        RATE["Rate Limit Tester"]
+        BFLA["BFLA Tester"]
+        SSRF["SSRF Tester"]
+        MISCONFIG["Misconfig Tester"]
+        INV["Inventory Tester"]
+    end
+
+    subgraph "Infrastructure"
+        REDIS["Redis<br/>(Message Broker)"]
+        CELERY["Celery Workers"]
+        DB["PostgreSQL"]
+    end
+
+    subgraph "Output Layer"
+        REPORT["Report Generator"]
+        SARIF["SARIF Export"]
+        HTML["HTML/PDF Report"]
+        JIRA["Jira/GitHub Integration"]
+    end
+
+    CLI --> API
+    WEB --> API
+    API --> SCHED
+    SCHED --> REDIS
+    REDIS --> CELERY
+
+    CELERY --> SPEC
+    CELERY --> CRAWL
+    CELERY --> CODE
+
+    SPEC --> FUZZ
+    CRAWL --> FUZZ
+    CODE --> FUZZ
+
+    FUZZ --> BOLA
+    FUZZ --> AUTHTEST
+    FUZZ --> BOPLA
+    FUZZ --> RATE
+    FUZZ --> BFLA
+    FUZZ --> SSRF
+    FUZZ --> MISCONFIG
+    FUZZ --> INV
+
+    BOLA --> REPORT
+    AUTHTEST --> REPORT
+    BOPLA --> REPORT
+    RATE --> REPORT
+    BFLA --> REPORT
+    SSRF --> REPORT
+    MISCONFIG --> REPORT
+    INV --> REPORT
+
+    REPORT --> SARIF
+    REPORT --> HTML
+    REPORT --> JIRA
+
+    CELERY --> DB
+    API --> DB
+</div>
+<hr>
+<h2 id="4-core-modules-breakdown">4. Core Modules Breakdown</h2>
+<h3 id="module-1-api-discovery-engine">Module 1: API Discovery Engine</h3>
+<p>Discovers all APIs from multiple sources:</p>
+<table>
+<thead><tr>
+<th>Discovery Method</th>
+<th>Input</th>
+<th>Technique</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>Spec-Based</strong></td>
+<td>OpenAPI/Swagger JSON/YAML, GraphQL schemas, Postman collections</td>
+<td>Parse specs to extract endpoints, methods, params, auth</td>
+</tr>
+<tr>
+<td><strong>Traffic-Based</strong></td>
+<td>HTTP proxy (mitmproxy)</td>
+<td>Intercept live traffic to capture undocumented API calls</td>
+</tr>
+<tr>
+<td><strong>Crawl-Based</strong></td>
+<td>Target base URL</td>
+<td>Probe common paths (<code>/api/</code>, <code>/v1/</code>, <code>/swagger.json</code>, <code>/graphql</code>)</td>
+</tr>
+<tr>
+<td><strong>Code-Based</strong></td>
+<td>Git repository URL</td>
+<td>Scan source code for route decorators (<code>@app.get</code>, <code>@router.post</code>)</td>
+</tr>
+</tbody></table>
+<p><strong>Output:</strong> A unified API inventory (endpoint, method, parameters, auth type, discovered source).</p>
+<hr>
+<h3 id="module-2-vulnerability-testing-engine">Module 2: Vulnerability Testing Engine</h3>
+<p>Each OWASP vulnerability gets a dedicated <strong>test plugin</strong> with:</p>
+<pre><code>┌─────────────────────────────────────┐
+│         Test Plugin Structure       │
+├─────────────────────────────────────┤
+│  • Plugin ID &amp; Name                │
+│  • OWASP Category (API1–API10)     │
+│  • Severity (Critical/High/Med/Low)│
+│  • Test Logic (request generator)  │
+│  • Response Analyzer               │
+│  • Remediation Guidance            │
+│  • False Positive Checks           │
+└─────────────────────────────────────┘</code></pre>
+<p><strong>Testing Strategies:</strong></p>
+<ul>
+<li><strong>Passive Analysis</strong> — Inspect headers, error messages, CORS, TLS without modifying state</li>
+<li><strong>Active Fuzzing</strong> — Send crafted payloads (SQLi, XSS, SSRF vectors, ID tampering)</li>
+<li><strong>Authorization Testing</strong> — Replay requests across user roles to test BOLA/BFLA</li>
+<li><strong>Rate Limit Testing</strong> — Burst requests to detect missing throttling</li>
+</ul>
+<hr>
+<h3 id="module-3-report-generator">Module 3: Report Generator</h3>
+<p>Reports must be <strong>developer-friendly</strong>, not just vulnerability dumps.</p>
+<p><strong>Report Formats:</strong></p>
+<table>
+<thead><tr>
+<th>Format</th>
+<th>Audience</th>
+<th>Use Case</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>SARIF</strong> (JSON)</td>
+<td>CI/CD pipelines, GitHub/GitLab</td>
+<td>Native integration with code scanning alerts in PRs</td>
+</tr>
+<tr>
+<td><strong>HTML/PDF</strong></td>
+<td>Managers, compliance teams</td>
+<td>Visual dashboards with severity charts</td>
+</tr>
+<tr>
+<td><strong>JSON</strong></td>
+<td>Developers, automation</td>
+<td>Programmatic consumption</td>
+</tr>
+<tr>
+<td><strong>Jira/GitHub Issues</strong></td>
+<td>Dev teams</td>
+<td>Auto-create tickets with remediation steps</td>
+</tr>
+</tbody></table>
+<p><strong>Each finding includes:</strong></p>
+<ul>
+<li>Vulnerability name & OWASP category</li>
+<li>Affected endpoint & HTTP method</li>
+<li>Request/response evidence (sanitized)</li>
+<li>Risk severity with CVSS-like score</li>
+<li><strong>Step-by-step remediation</strong> with code snippets</li>
+<li>References to OWASP documentation</li>
+</ul>
+<hr>
+<h2 id="5-recommended-tech-stack">5. Recommended Tech Stack</h2>
+<table>
+<thead><tr>
+<th>Layer</th>
+<th>Technology</th>
+<th>Rationale</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>Language</strong></td>
+<td>Python 3.11+</td>
+<td>Rich security ecosystem (requests, pyjwt, cryptography)</td>
+</tr>
+<tr>
+<td><strong>Web Framework</strong></td>
+<td>FastAPI</td>
+<td>Async, auto-docs, Pydantic validation, high performance</td>
+</tr>
+<tr>
+<td><strong>Task Queue</strong></td>
+<td>Celery + Redis</td>
+<td>Distribute scan tasks across workers, handle long-running tests</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>PostgreSQL</td>
+<td>Store scan results, API inventory, user projects</td>
+</tr>
+<tr>
+<td><strong>ORM</strong></td>
+<td>SQLAlchemy + Alembic</td>
+<td>Database models and migrations</td>
+</tr>
+<tr>
+<td><strong>HTTP Client</strong></td>
+<td>httpx (async)</td>
+<td>Async HTTP requests for scanning</td>
+</tr>
+<tr>
+<td><strong>Proxy</strong></td>
+<td>mitmproxy</td>
+<td>Traffic interception for API discovery</td>
+</tr>
+<tr>
+<td><strong>Spec Parsing</strong></td>
+<td>openapi-spec-validator, prance</td>
+<td>Parse OpenAPI/Swagger specs</td>
+</tr>
+<tr>
+<td><strong>Frontend</strong></td>
+<td>React + Next.js (optional)</td>
+<td>Web dashboard for scan management</td>
+</tr>
+<tr>
+<td><strong>CLI</strong></td>
+<td>Typer / Click</td>
+<td>Developer-friendly command-line interface</td>
+</tr>
+<tr>
+<td><strong>Containerization</strong></td>
+<td>Docker + Docker Compose</td>
+<td>Reproducible deployment, isolated scan environments</td>
+</tr>
+<tr>
+<td><strong>CI/CD</strong></td>
+<td>GitHub Actions</td>
+<td>Automated testing and pipeline integration</td>
+</tr>
+<tr>
+<td><strong>Report Templates</strong></td>
+<td>Jinja2 + WeasyPrint</td>
+<td>HTML/PDF report generation</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="6-project-structure-proposed">6. Project Structure (Proposed)</h2>
+<pre><code>api-security-tester/
+├── README.md
+├── pyproject.toml
+├── docker-compose.yml
+├── Dockerfile
+│
+├── src/
+│   ├── __init__.py
+│   ├── main.py                      # FastAPI app entry point
+│   ├── config.py                    # Settings &amp; environment config
+│   │
+│   ├── api/                         # REST API routes
+│   │   ├── scans.py                 # POST /scans, GET /scans/{id}
+│   │   ├── projects.py              # Project management
+│   │   └── reports.py               # Report download endpoints
+│   │
+│   ├── discovery/                   # API Discovery Engine
+│   │   ├── __init__.py
+│   │   ├── spec_parser.py           # OpenAPI/Swagger/GraphQL parser
+│   │   ├── traffic_interceptor.py   # mitmproxy-based discovery
+│   │   ├── crawler.py               # URL path brute-forcing
+│   │   └── code_scanner.py          # Source code analysis
+│   │
+│   ├── scanner/                     # Vulnerability Testing Engine
+│   │   ├── __init__.py
+│   │   ├── base_plugin.py           # Abstract test plugin class
+│   │   ├── engine.py                # Orchestrates all plugins
+│   │   ├── plugins/
+│   │   │   ├── bola.py              # API1: BOLA tests
+│   │   │   ├── broken_auth.py       # API2: Authentication tests
+│   │   │   ├── bopla.py             # API3: Property-level auth
+│   │   │   ├── rate_limit.py        # API4: Resource consumption
+│   │   │   ├── bfla.py              # API5: Function-level auth
+│   │   │   ├── business_flow.py     # API6: Business flow abuse
+│   │   │   ├── ssrf.py              # API7: SSRF tests
+│   │   │   ├── misconfiguration.py  # API8: Security misconfig
+│   │   │   ├── inventory.py         # API9: Inventory management
+│   │   │   └── unsafe_consumption.py# API10: Unsafe consumption
+│   │   └── payloads/                # Attack payload databases
+│   │       ├── sqli.txt
+│   │       ├── xss.txt
+│   │       └── ssrf.txt
+│   │
+│   ├── models/                      # Database models
+│   │   ├── scan.py
+│   │   ├── finding.py
+│   │   └── api_endpoint.py
+│   │
+│   ├── reports/                     # Report Generation
+│   │   ├── generator.py
+│   │   ├── sarif_export.py
+│   │   ├── html_report.py
+│   │   ├── pdf_report.py
+│   │   └── templates/               # Jinja2 HTML templates
+│   │
+│   └── workers/                     # Celery task definitions
+│       ├── scan_tasks.py
+│       └── report_tasks.py
+│
+├── cli/                             # CLI interface
+│   └── main.py
+│
+├── tests/                           # Test suite
+│   ├── test_discovery/
+│   ├── test_plugins/
+│   └── test_reports/
+│
+└── docs/                            # Documentation
+    ├── architecture.md
+    └── plugin_development.md</code></pre>
+<hr>
+<h2 id="7-key-workflow">7. Key Workflow</h2>
+<div class="mermaid">
+sequenceDiagram
+    actor Dev as Developer
+    participant CLI as CLI / Web UI
+    participant API as FastAPI Server
+    participant Q as Redis Queue
+    participant W as Celery Worker
+    participant DB as PostgreSQL
+
+    Dev->>CLI: Start scan (target URL + OpenAPI spec)
+    CLI->>API: POST /scans {target, spec_url, auth_config}
+    API->>DB: Create scan record (status: PENDING)
+    API->>Q: Dispatch scan task
+    API-->>CLI: 202 Accepted {scan_id}
+
+    Q->>W: Pick up scan task
+    W->>W: Phase 1: Discover APIs
+    W->>W: Phase 2: Run OWASP test plugins
+    W->>DB: Store findings (per endpoint)
+    W->>W: Phase 3: Generate report
+    W->>DB: Update scan (status: COMPLETED)
+
+    Dev->>CLI: Check status
+    CLI->>API: GET /scans/{scan_id}
+    API->>DB: Fetch results
+    API-->>CLI: {status, summary, findings_count}
+
+    Dev->>CLI: Download report
+    CLI->>API: GET /reports/{scan_id}?format=html
+    API-->>CLI: HTML report with remediation steps
+</div>
+<hr>
+<h2 id="8-existing-tools-competitive-landscape">8. Existing Tools / Competitive Landscape</h2>
+<p>Understanding what exists helps position this project:</p>
+<table>
+<thead><tr>
+<th>Tool</th>
+<th>Type</th>
+<th>Strengths</th>
+<th>Gaps Your Tool Can Fill</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>OWASP ZAP</strong></td>
+<td>DAST Proxy</td>
+<td>Best all-rounder, CI/CD integration</td>
+<td>Not API-first; limited BOLA/BFLA testing</td>
+</tr>
+<tr>
+<td><strong>Nuclei</strong></td>
+<td>Template Scanner</td>
+<td>Community templates, fast</td>
+<td>Requires manual template writing per target</td>
+</tr>
+<tr>
+<td><strong>42Crunch</strong></td>
+<td>Spec Audit</td>
+<td>Deep OpenAPI analysis</td>
+<td>Only static, no runtime testing</td>
+</tr>
+<tr>
+<td><strong>Burp Suite</strong></td>
+<td>Manual Pentesting</td>
+<td>Gold standard for manual testing</td>
+<td>Not automated, expensive</td>
+</tr>
+<tr>
+<td><strong>Apisec.ai</strong></td>
+<td>SaaS Platform</td>
+<td>Full automation</td>
+<td>Proprietary, expensive, no self-hosting</td>
+</tr>
+</tbody></table>
+<blockquote class="alert-tip"><span class="alert-label">TIP</span><strong>Your differentiator</strong>: An <strong>open-source, all-in-one tool</strong> that combines automated discovery + OWASP API Top 10 testing + developer-friendly reports — something no single open-source tool does end-to-end today.</blockquote>
+<hr>
+<h2 id="9-development-phases-roadmap">9. Development Phases (Roadmap)</h2>
+<h3 id="phase-1-foundation-weeks-1-3">Phase 1 — Foundation (Weeks 1–3)</h3>
+<ul>
+<li>[ ] Set up project structure with FastAPI + Celery + Redis + PostgreSQL</li>
+<li>[ ] Build API Discovery from OpenAPI/Swagger specs (spec parser)</li>
+<li>[ ] Create the base plugin architecture (<code>BaseTestPlugin</code> abstract class)</li>
+<li>[ ] Implement 2–3 core test plugins (BOLA, Broken Auth, Security Misconfiguration)</li>
+<li>[ ] Basic CLI with Typer</li>
+</ul>
+<h3 id="phase-2-core-testing-engine-weeks-4-6">Phase 2 — Core Testing Engine (Weeks 4–6)</h3>
+<ul>
+<li>[ ] Implement remaining OWASP API Top 10 test plugins</li>
+<li>[ ] Build the fuzzer engine with payload databases</li>
+<li>[ ] Add traffic-based discovery (mitmproxy integration)</li>
+<li>[ ] Implement multi-user-role authorization testing (for BOLA/BFLA)</li>
+</ul>
+<h3 id="phase-3-reporting-integration-weeks-7-8">Phase 3 — Reporting & Integration (Weeks 7–8)</h3>
+<ul>
+<li>[ ] SARIF report export</li>
+<li>[ ] HTML/PDF report generation with Jinja2 templates</li>
+<li>[ ] Jira / GitHub Issues integration</li>
+<li>[ ] CI/CD pipeline integration (GitHub Actions workflow)</li>
+</ul>
+<h3 id="phase-4-polish-production-weeks-9-10">Phase 4 — Polish & Production (Weeks 9–10)</h3>
+<ul>
+<li>[ ] Web dashboard (React/Next.js) — optional</li>
+<li>[ ] Docker Compose production setup</li>
+<li>[ ] Comprehensive test suite</li>
+<li>[ ] Documentation & plugin development guide</li>
+<li>[ ] Security hardening of the tool itself</li>
+</ul>
+<hr>
+<h2 id="10-key-technical-challenges">10. Key Technical Challenges</h2>
+<table>
+<thead><tr>
+<th>Challenge</th>
+<th>Mitigation Strategy</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>False Positives</strong></td>
+<td>Implement confirmation re-testing, response diffing, and confidence scoring</td>
+</tr>
+<tr>
+<td><strong>Authentication Complexity</strong></td>
+<td>Support multiple auth schemes: Bearer JWT, API Key, OAuth2, Basic Auth, Cookie-based</td>
+</tr>
+<tr>
+<td><strong>Business Logic Testing</strong></td>
+<td>Cannot be fully automated; provide hooks for custom test scripts</td>
+</tr>
+<tr>
+<td><strong>Rate Limiting the Scanner</strong></td>
+<td>Configurable request throttling to avoid getting blocked or causing DoS</td>
+</tr>
+<tr>
+<td><strong>Stateful APIs</strong></td>
+<td>Support request chaining (e.g., create → read → update → delete flows)</td>
+</tr>
+<tr>
+<td><strong>Legal/Ethical</strong></td>
+<td>Only scan authorized targets; require explicit consent confirmation</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="11-unique-selling-points-for-this-project">11. Unique Selling Points for This Project</h2>
+<ol>
+<li><strong>Full OWASP API Top 10 Coverage</strong> — Dedicated test module for each vulnerability category</li>
+<li><strong>Multi-Source API Discovery</strong> — Spec + Traffic + Crawl + Code analysis</li>
+<li><strong>Plugin Architecture</strong> — Easy to extend with custom vulnerability checks</li>
+<li><strong>Developer-First Reports</strong> — SARIF for CI/CD, code-level remediation guidance</li>
+<li><strong>Open Source & Self-Hosted</strong> — No vendor lock-in, full control</li>
+<li><strong>CI/CD Native</strong> — Designed to run in pipelines, not just standalone</li>
+</ol>
+    </div>
+    <div style="text-align:center; padding:40px; color:var(--text-muted); font-size:0.85em; border-top:1px solid var(--surface2); margin-top:60px;">
+        <p>API Security Testing Automation Platform &mdash; Project Blueprint</p>
+        <p style="margin-top:8px;">To save as PDF: Open in browser &rarr; Ctrl+P &rarr; Save as PDF</p>
+    </div>
+
+    <!-- Mermaid.js for rendering diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            themeVariables: {
+                primaryColor: '#1e3a5f',
+                primaryTextColor: '#e2e8f0',
+                primaryBorderColor: '#38bdf8',
+                lineColor: '#64748b',
+                secondaryColor: '#2d1b69',
+                tertiaryColor: '#1e293b',
+                noteBkgColor: '#334155',
+                noteTextColor: '#e2e8f0',
+                actorTextColor: '#e2e8f0',
+                actorBkg: '#1e3a5f',
+                actorBorder: '#38bdf8',
+                signalColor: '#94a3b8',
+                signalTextColor: '#e2e8f0',
+                labelBoxBkgColor: '#1e293b',
+                labelBoxBorderColor: '#475569',
+                labelTextColor: '#e2e8f0',
+                loopTextColor: '#e2e8f0',
+                activationBorderColor: '#38bdf8',
+                activationBkgColor: '#1e3a5f',
+                sequenceNumberColor: '#0f172a',
+                fontFamily: 'Segoe UI, system-ui, sans-serif',
+                fontSize: '14px',
+                entityRelationship: {
+                    useMaxWidth: true
+                }
+            },
+            er: {
+                useMaxWidth: true,
+                fontSize: 12
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                useMaxWidth: true,
+                showSequenceNumbers: false
+            },
+            gantt: {
+                useMaxWidth: true,
+                fontSize: 12
+            }
+        });
+    </script>
+</body>
+</html>
