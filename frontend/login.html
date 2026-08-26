@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - APISec Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-page">
+  <div class="auth-bg"></div>
+  <div class="auth-split">
+    <!-- Left Branding Panel -->
+    <div class="auth-left">
+      <div class="auth-brand">
+        <i class="fa-solid fa-shield-halved auth-logo"></i>
+        <h1 class="auth-title">APISec Platform</h1>
+      </div>
+      <p class="auth-subtitle">Professional API Security Testing Automation</p>
+      <ul class="feature-list">
+        <li class="feature-item">
+          <div class="feature-icon"><i class="fa-solid fa-radar"></i></div>
+          <span>Continuous API Discovery & Scanning</span>
+        </li>
+        <li class="feature-item">
+          <div class="feature-icon"><i class="fa-solid fa-bug"></i></div>
+          <span>OWASP Top 10 API Vulnerability Detection</span>
+        </li>
+        <li class="feature-item">
+          <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <span>Comprehensive Security Reporting</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right Login Panel -->
+    <div class="auth-right">
+      <div class="auth-card glass-card fade-in">
+        <h2 class="card-title">Welcome Back</h2>
+        <p class="card-subtitle">Sign in to your account to continue</p>
+
+        <!-- Info / Success message from registration -->
+        <div id="info-message" class="alert alert-info hidden"></div>
+        <div id="error-message" class="alert alert-error hidden"></div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <div class="form-input-wrapper left-icon">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" id="email" class="form-input" placeholder="you@example.com" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <div class="form-input-wrapper left-icon right-icon">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" id="password" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+              <i class="fa-solid fa-eye" id="toggle-password" style="right:0.75rem; cursor:pointer;"></i>
+            </div>
+          </div>
+
+          <div class="form-group" style="display:flex; justify-content:space-between; align-items:center;">
+            <label class="checkbox-group">
+              <input type="checkbox" class="checkbox-input" id="remember">
+              <span class="text-sm">Remember me</span>
+            </label>
+            <a href="#" class="text-sm">Forgot password?</a>
+          </div>
+
+          <button type="submit" id="submit-btn" class="btn btn-primary w-full btn-lg">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+          </button>
+        </form>
+
+        <div class="auth-divider"><span>or</span></div>
+        <div class="text-center">
+          <span class="text-muted">Don't have an account?</span>
+          <a href="register.html" class="font-semibold"> Create Account</a>
+        </div>
+
+        <!-- Admin note (small, subtle) -->
+        <div style="margin-top:1.5rem; padding:0.75rem; background:rgba(124,58,237,0.08); border:1px solid rgba(124,58,237,0.2); border-radius:8px; font-size:0.78rem; color:var(--text-muted); text-align:center;">
+          <i class="fa-solid fa-circle-info" style="color:#7c3aed;"></i>
+          Admin panel access is granted only after login with admin credentials.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      requireGuest();
+
+      // Show message passed via URL (e.g. after registration)
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('registered') === '1') {
+        const infoDiv = document.getElementById('info-message');
+        infoDiv.textContent = 'Account created successfully! Please login with your credentials.';
+        infoDiv.classList.remove('hidden');
+      }
+
+      const form = document.getElementById('login-form');
+      const emailInput = document.getElementById('email');
+      const pwInput = document.getElementById('password');
+      const errDiv = document.getElementById('error-message');
+      const btn = document.getElementById('submit-btn');
+
+      document.getElementById('toggle-password').addEventListener('click', () => {
+        const t = pwInput.type === 'password' ? 'text' : 'password';
+        pwInput.type = t;
+        document.getElementById('toggle-password').className = t === 'password' ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errDiv.classList.add('hidden');
+        document.getElementById('info-message').classList.add('hidden');
+        showLoading(btn);
+
+        try {
+          const user = await api.login(emailInput.value.trim(), pwInput.value);
+          setCurrentUser(user);
+          redirectToDashboard();
+        } catch (err) {
+          errDiv.textContent = err.message || 'Sign in failed. Please check your credentials.';
+          errDiv.classList.remove('hidden');
+          pwInput.value = '';
+          pwInput.focus();
+        } finally {
+          hideLoading(btn, '<i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

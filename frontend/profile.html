@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - APISec Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>APISec Platform</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="profile.html" class="sidebar-link active">
+          <i class="fa-solid fa-user"></i>
+          <span>My Profile</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn btn-outline w-full btn-sm" onclick="handleLogout()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="flex items-center gap-4">
+          <i class="fa-solid fa-bars topbar-icon" id="toggle-sidebar" style="font-size: 1.25rem;"></i>
+          <h2 class="font-semibold">Profile Settings</h2>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area fade-in">
+        
+        <!-- Profile Header -->
+        <div class="glass-card mb-6 flex items-center gap-6">
+          <div class="user-avatar" id="profile-avatar" style="width: 5rem; height: 5rem; font-size: 2rem;">U</div>
+          <div>
+            <h1 class="text-2xl font-bold" id="profile-name">User Name</h1>
+            <div class="text-muted mb-2" id="profile-email">user@example.com</div>
+            <div id="profile-role"></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6">
+          <!-- Profile Info Form -->
+          <div class="glass-card">
+            <h3 class="font-semibold mb-4 border-b border-[var(--border-color)] pb-2">Profile Information</h3>
+            <form id="profile-form">
+              <div class="form-group">
+                <label class="form-label" for="fullname">Full Name</label>
+                <input type="text" id="fullname" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email">Email Address (Read-only)</label>
+                <input type="email" id="email" class="form-input" disabled style="opacity: 0.7; cursor: not-allowed;">
+              </div>
+              <button type="submit" id="btn-save-profile" class="btn btn-primary mt-2">Save Changes</button>
+            </form>
+          </div>
+
+          <!-- Password Form -->
+          <div class="glass-card">
+            <h3 class="font-semibold mb-4 border-b border-[var(--border-color)] pb-2">Security Settings</h3>
+            <form id="password-form">
+              <div class="form-group">
+                <label class="form-label" for="current-password">Current Password</label>
+                <input type="password" id="current-password" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="new-password">New Password</label>
+                <input type="password" id="new-password" class="form-input" required minlength="8">
+                <div class="pw-strength hidden" id="pw-strength" style="margin-top:0.5rem">
+                  <div class="pw-bars">
+                    <div class="pw-bar" id="bar-1"></div>
+                    <div class="pw-bar" id="bar-2"></div>
+                    <div class="pw-bar" id="bar-3"></div>
+                    <div class="pw-bar" id="bar-4"></div>
+                  </div>
+                  <div class="pw-text" id="pw-text">Weak</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="confirm-password">Confirm New Password</label>
+                <input type="password" id="confirm-password" class="form-input" required>
+              </div>
+              <button type="submit" id="btn-save-password" class="btn btn-secondary mt-2">Update Password</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="glass-card mt-6">
+          <h3 class="font-semibold mb-4 border-b border-[var(--border-color)] pb-2">Account Details</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <div class="text-sm text-muted">Member Since</div>
+              <div class="font-medium" id="member-since">-</div>
+            </div>
+            <div>
+              <div class="text-sm text-muted">Account Status</div>
+              <div class="font-medium"><span class="badge badge-low">Active</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      requireAuth();
+      
+      let user = getCurrentUser();
+      if (!user) {
+        try {
+          user = await api.getMe();
+          setCurrentUser(user);
+        } catch(e) {
+          handleLogout();
+        }
+      }
+
+      function populate() {
+        document.getElementById('profile-name').textContent = user.full_name;
+        document.getElementById('profile-email').textContent = user.email;
+        document.getElementById('profile-role').innerHTML = getRoleBadgeHTML(user.role || 'viewer');
+        document.getElementById('fullname').value = user.full_name;
+        document.getElementById('email').value = user.email;
+        document.getElementById('member-since').textContent = formatDate(user.created_at || new Date().toISOString());
+        
+        const initials = user.full_name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+        document.getElementById('profile-avatar').textContent = initials;
+      }
+      populate();
+
+      // Profile Form
+      document.getElementById('profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btn-save-profile');
+        showLoading(btn);
+        try {
+          const updatedUser = await api.updateProfile({ full_name: document.getElementById('fullname').value });
+          setCurrentUser(updatedUser);
+          user = updatedUser;
+          populate();
+          showToast('Profile updated successfully', 'success');
+        } catch(error) {
+          showToast(error.message, 'error');
+        } finally {
+          hideLoading(btn);
+        }
+      });
+
+      // Password Form
+      const newPw = document.getElementById('new-password');
+      const pwStrength = document.getElementById('pw-strength');
+      const pwText = document.getElementById('pw-text');
+
+      newPw.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (val.length > 0) {
+          pwStrength.classList.remove('hidden');
+          const strength = checkPasswordStrength(val);
+          pwText.textContent = strength.label;
+          pwText.style.color = strength.color;
+          for(let i=1; i<=4; i++) {
+            const bar = document.getElementById(`bar-${i}`);
+            bar.style.backgroundColor = i <= strength.score ? strength.color : 'var(--border-color)';
+          }
+        } else {
+          pwStrength.classList.add('hidden');
+        }
+      });
+
+      document.getElementById('password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const current = document.getElementById('current-password').value;
+        const newp = document.getElementById('new-password').value;
+        const conf = document.getElementById('confirm-password').value;
+
+        if (newp !== conf) {
+          showToast('New passwords do not match', 'error');
+          return;
+        }
+
+        const btn = document.getElementById('btn-save-password');
+        showLoading(btn);
+        try {
+          await api.changePassword(current, newp);
+          showToast('Password updated successfully', 'success');
+          document.getElementById('password-form').reset();
+          pwStrength.classList.add('hidden');
+        } catch(error) {
+          showToast(error.message, 'error');
+        } finally {
+          hideLoading(btn);
+        }
+      });
+
+      document.getElementById('toggle-sidebar').addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('hidden');
+      });
+    });
+  </script>
+</body>
+</html>

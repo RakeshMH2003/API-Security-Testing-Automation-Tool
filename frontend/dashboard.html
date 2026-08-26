@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - APISec Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>APISec Platform</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link active">
+          <i class="fa-solid fa-house"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="sidebar-link nav-coming-soon">
+          <i class="fa-solid fa-folder-open"></i>
+          <span>Projects</span>
+        </a>
+        <a href="#" class="sidebar-link nav-coming-soon">
+          <i class="fa-solid fa-bullseye"></i>
+          <span>Targets</span>
+        </a>
+        <a href="#" class="sidebar-link nav-coming-soon">
+          <i class="fa-solid fa-network-wired"></i>
+          <span>API Inventory</span>
+        </a>
+        <a href="#" class="sidebar-link nav-coming-soon">
+          <i class="fa-solid fa-play"></i>
+          <span>Scans</span>
+        </a>
+        <a href="#" class="sidebar-link nav-coming-soon">
+          <i class="fa-solid fa-bug"></i>
+          <span>Findings</span>
+        </a>
+        <a href="#" class="sidebar-link nav-coming-soon">
+          <i class="fa-solid fa-chart-bar"></i>
+          <span>Reports</span>
+        </a>
+        <a href="#" class="sidebar-link nav-coming-soon">
+          <i class="fa-solid fa-gear"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <!-- Admin only section — hidden until role confirmed -->
+      <div class="admin-only hidden" style="padding: 0 0.75rem; margin-top: 0.5rem;">
+        <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:#7c3aed; padding: 0.5rem 0.75rem; font-weight:700;">
+          Admin Panel
+        </div>
+        <a href="#" class="sidebar-link nav-coming-soon" style="color:#c084fc;">
+          <i class="fa-solid fa-users-gear"></i>
+          <span>User Management</span>
+        </a>
+        <a href="#" class="sidebar-link nav-coming-soon" style="color:#c084fc;">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Platform Settings</span>
+        </a>
+        <a href="#" class="sidebar-link nav-coming-soon" style="color:#c084fc;">
+          <i class="fa-solid fa-scroll"></i>
+          <span>Audit Logs</span>
+        </a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-info" onclick="window.location.href='profile.html'" style="cursor:pointer">
+          <div class="user-avatar" id="sidebar-avatar">U</div>
+          <div style="overflow: hidden;">
+            <div class="font-semibold text-sm truncate" id="sidebar-name">User Name</div>
+            <div id="sidebar-role-badge"></div>
+          </div>
+        </div>
+        <button class="btn btn-outline w-full btn-sm" onclick="handleLogout()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="flex items-center gap-4">
+          <i class="fa-solid fa-bars topbar-icon" id="toggle-sidebar" style="font-size: 1.25rem;"></i>
+          <h2 class="font-semibold">Dashboard</h2>
+        </div>
+        <div class="topbar-actions">
+          <i class="fa-solid fa-bell topbar-icon"></i>
+          <div class="user-avatar" id="topbar-avatar" onclick="window.location.href='profile.html'" style="cursor:pointer; width: 2rem; height: 2rem; font-size: 0.875rem;">U</div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area fade-in">
+        <h1 class="text-2xl font-bold mb-2" id="welcome-text">Welcome back!</h1>
+        <p class="text-muted mb-6" id="current-date"></p>
+
+        <div class="alert alert-info mb-6">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Platform ready. Add a project to begin scanning.</span>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-4 gap-4 mb-6">
+          <div class="stat-card">
+            <div class="flex justify-between items-start">
+              <div class="stat-card-title">Total Projects</div>
+              <i class="fa-solid fa-folder text-muted"></i>
+            </div>
+            <div class="stat-card-value">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="flex justify-between items-start">
+              <div class="stat-card-title">APIs Discovered</div>
+              <i class="fa-solid fa-network-wired text-muted"></i>
+            </div>
+            <div class="stat-card-value">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="flex justify-between items-start">
+              <div class="stat-card-title">Active Scans</div>
+              <i class="fa-solid fa-radar text-muted"></i>
+            </div>
+            <div class="stat-card-value">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="flex justify-between items-start">
+              <div class="stat-card-title">Total Findings</div>
+              <i class="fa-solid fa-bug text-muted"></i>
+            </div>
+            <div class="stat-card-value">0</div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div class="glass-card flex flex-col items-center justify-center min-h-[300px]">
+            <h3 class="font-semibold w-full text-left mb-4 border-b border-[var(--border-color)] pb-2">Findings by Severity</h3>
+            <div class="text-muted flex flex-col items-center gap-2">
+              <i class="fa-solid fa-chart-pie text-4xl mb-2"></i>
+              <span>Chart area (Coming Soon)</span>
+            </div>
+          </div>
+          <div class="glass-card flex flex-col items-center justify-center min-h-[300px]">
+            <h3 class="font-semibold w-full text-left mb-4 border-b border-[var(--border-color)] pb-2">OWASP Coverage</h3>
+            <div class="text-muted flex flex-col items-center gap-2">
+              <i class="fa-solid fa-chart-column text-4xl mb-2"></i>
+              <span>Chart area (Coming Soon)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions & Table -->
+        <div class="grid grid-cols-4 gap-4 mb-6">
+          <div class="glass-card col-span-3">
+            <h3 class="font-semibold mb-4">Recent Scans</h3>
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Scan Name</th>
+                    <th>Target</th>
+                    <th>Status</th>
+                    <th>Findings</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="5" class="text-center py-8 text-muted">No scans yet. Create a project to get started.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="glass-card flex flex-col gap-3">
+            <h3 class="font-semibold mb-2">Quick Actions</h3>
+            <button class="btn btn-primary w-full justify-start nav-coming-soon"><i class="fa-solid fa-plus w-5"></i> New Project</button>
+            <button class="btn btn-outline w-full justify-start nav-coming-soon"><i class="fa-solid fa-file-import w-5"></i> Import OpenAPI</button>
+            <button class="btn btn-outline w-full justify-start nav-coming-soon"><i class="fa-solid fa-play w-5"></i> Start Scan</button>
+            <button class="btn btn-outline w-full justify-start nav-coming-soon"><i class="fa-solid fa-file-lines w-5"></i> View Reports</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      requireAuth();
+      
+      const user = getCurrentUser();
+      if (!user) {
+        try {
+          const fetchedUser = await api.getMe();
+          setCurrentUser(fetchedUser);
+          populateUserData(fetchedUser);
+        } catch (e) {
+          handleLogout();
+        }
+      } else {
+        populateUserData(user);
+      }
+
+      function populateUserData(u) {
+        document.getElementById('welcome-text').textContent = `Welcome back, ${u.full_name.split(' ')[0]}!`;
+        document.getElementById('sidebar-name').textContent = u.full_name;
+        document.getElementById('sidebar-role-badge').innerHTML = getRoleBadgeHTML(u.role || 'viewer');
+        
+        const initials = u.full_name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+        document.getElementById('sidebar-avatar').textContent = initials;
+        document.getElementById('topbar-avatar').textContent = initials;
+
+        // Hide admin-only features if not an admin
+        if (u.role !== 'admin') {
+          document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
+        } else {
+          document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+        }
+      }
+
+      document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+      document.getElementById('toggle-sidebar').addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('hidden');
+      });
+
+      document.querySelectorAll('.nav-coming-soon').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          showToast('Feature coming in Module 02+', 'info');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

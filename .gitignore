@@ -1,0 +1,52 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+venv/
+.venv/
+env/
+.env.local
+.env.production
+
+# Keep .env template but not real secrets
+# .env   <-- we will include a .env.example instead
+
+# Database
+*.db
+*.sqlite3
+pgdata/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node (if added later)
+node_modules/
+.next/
+out/
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Temporary scripts (root level)
+generate_backend.py
+init_db.py
