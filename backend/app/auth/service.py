@@ -1,4 +1,4 @@
-from sqlalchemy.ext.asyncio import AsyncSession
+﻿from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from fastapi import HTTPException, status
 from datetime import datetime
@@ -93,3 +93,25 @@ async def is_token_blacklisted(db: AsyncSession, jti: str) -> bool:
     stmt = select(TokenBlacklist).where(TokenBlacklist.token_jti == jti)
     result = await db.execute(stmt)
     return result.scalars().first() is not None
+
+# --- RBAC Services ---
+
+async def get_all_users(db: AsyncSession):
+    result = await db.execute(select(User).order_by(User.created_at.desc()))
+    return result.scalars().all()
+
+async def update_user_role(db: AsyncSession, user_id: str, role: str) -> User:
+    user = await get_user_by_id(db, user_id)
+    if role not in ['admin', 'analyst', 'developer', 'viewer']:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Invalid role")
+    user.role = role
+    await db.commit()
+    await db.refresh(user)
+    return user
+
+async def update_user_status(db: AsyncSession, user_id: str, is_active: bool) -> User:
+    user = await get_user_by_id(db, user_id)
+    user.is_active = is_active
+    await db.commit()
+    await db.refresh(user)
+    return user

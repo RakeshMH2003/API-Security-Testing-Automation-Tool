@@ -13,6 +13,16 @@ db_users = {
         "is_active": True,
         "created_at": "2026-01-01T00:00:00Z",
         "last_login": None
+    },
+    "viewer@security.local": {
+        "id": "1111-2222-3333-4444",
+        "email": "viewer@security.local",
+        "password": "Viewer@1234",
+        "full_name": "Read-Only User",
+        "role": "viewer",
+        "is_active": True,
+        "created_at": "2026-01-02T00:00:00Z",
+        "last_login": None
     }
 }
 db_tokens = {}
@@ -75,6 +85,35 @@ class H(SimpleHTTPRequestHandler):
             b=self.body()
             if b.get('full_name'): db_users[u['email']]['full_name']=b['full_name']
             return self.json({k:v for k,v in db_users[u['email']].items() if k!='password'})
+        elif p.startswith('/api/v1/users/'):
+            u=self.current_user()
+            if not u or u['role'] != 'admin': return self.json({"detail":"Admin privileges required."},403)
+            
+            user_id = p.split('/')[-2]
+            action = p.split('/')[-1]
+            
+            target_email = next((e for e, data in db_users.items() if data['id'] == user_id), None)
+            if not target_email: return self.json({"detail":"User not found."},404)
+            
+            if action == 'role':
+                b=self.body()
+                new_role = b.get('role')
+                if new_role not in ['admin', 'analyst', 'developer', 'viewer']:
+                    return self.json({"detail":"Invalid role."},422)
+                if target_email == u['email']:
+                    return self.json({"detail":"Cannot change your own role."},400)
+                db_users[target_email]['role'] = new_role
+                return self.json({"message":"Role updated successfully.", "role": new_role})
+                
+            elif action == 'status':
+                b=self.body()
+                is_active = b.get('is_active')
+                if target_email == u['email']:
+                    return self.json({"detail":"Cannot disable your own account."},400)
+                db_users[target_email]['is_active'] = is_active
+                return self.json({"message":"Status updated successfully.", "is_active": is_active})
+                
+            return self.json({"detail":"Not found."},404)
         elif p=='/api/v1/auth/password':
             u=self.current_user()
             if not u: return self.json({"detail":"Not authenticated."},401)
@@ -88,6 +127,11 @@ class H(SimpleHTTPRequestHandler):
     def do_PUT(self): self.do_POST()
     def do_GET(self):
         p=urlparse(self.path).path
+        if p=='/api/v1/users':
+            u=self.current_user()
+            if not u or u['role'] != 'admin': return self.json({"detail":"Admin privileges required."},403)
+            users_list = [{k:v for k,v in user.items() if k!='password'} for user in db_users.values()]
+            return self.json(users_list)
         if p=='/api/v1/auth/me':
             u=self.current_user()
             if not u: return self.json({"detail":"Not authenticated."},401)

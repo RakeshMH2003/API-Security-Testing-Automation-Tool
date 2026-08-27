@@ -1,4 +1,4 @@
-﻿const API_BASE = 'http://localhost:8000/api/v1';
+const API_BASE = 'http://localhost:8000/api/v1';
 
 class ApiClient {
   constructor() {
@@ -85,9 +85,15 @@ class ApiClient {
 
   async getMe() { return this.get('/auth/me', true); }
   async updateProfile(data) { return this.put('/auth/me', data, true); }
+    // --- Admin RBAC Methods ---
+  async getUsers() { return this.get('/users', true); }
+  async updateUserRole(userId, role) { return this.put(`/users/${userId}/role`, { role }, true); }
+  async updateUserStatus(userId, is_active) { return this.put(`/users/${userId}/status`, { is_active }, true); }
+
   async changePassword(current_password, new_password) {
     return this.put('/auth/password', { current_password, new_password }, true);
   }
 }
 
 const api = new ApiClient();
+

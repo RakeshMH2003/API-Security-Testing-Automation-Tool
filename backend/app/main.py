@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+﻿from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.database import create_tables
 from app.auth.router import router as auth_router
+from app.users.router import router as users_router
 
 app = FastAPI(
     title='API Security Testing Platform',
@@ -23,6 +24,7 @@ async def startup_event():
     await create_tables()
 
 app.include_router(auth_router)
+app.include_router(users_router)
 
 @app.get('/api/v1/health')
 async def health_check():
@@ -32,3 +34,4 @@ import os
 # Mount frontend only if the directory exists to avoid errors on startup during dev
 if os.path.exists('../../frontend'):
     app.mount("/", StaticFiles(directory="../../frontend", html=True), name="frontend")
+

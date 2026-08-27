@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field
+﻿from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 from typing import Optional
 from uuid import UUID
@@ -40,3 +40,11 @@ class TokenResponse(BaseModel):
 
 class MessageResponse(BaseModel):
     message: str
+
+# --- RBAC Schemas ---
+
+class UserRoleUpdate(BaseModel):
+    role: str = Field(..., description="Must be one of: admin, analyst, developer, viewer")
+
+class UserStatusUpdate(BaseModel):
+    is_active: bool
