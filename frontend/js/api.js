@@ -1,4 +1,4 @@
-﻿const API_BASE = '/api/v1';
+﻿const API_BASE = '/api';
 
 class ApiClient {
   constructor() {
@@ -96,5 +96,6 @@ class ApiClient {
 }
 
 const api = new ApiClient();
+
 
 

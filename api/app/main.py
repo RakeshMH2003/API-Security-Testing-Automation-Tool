@@ -27,7 +27,6 @@ app.add_middleware(
 async def startup_event():
     try:
         await create_tables()
-        # Seed default admin user if none exists
         async with AsyncSessionLocal() as session:
             result = await session.execute(select(User).where(User.email == 'admin@security.local'))
             admin = result.scalars().first()
@@ -42,16 +41,23 @@ async def startup_event():
                 )
                 session.add(new_admin)
                 await session.commit()
-                print("Default admin user initialized (admin@security.local / Admin@1234)")
+                print("Default admin initialized")
     except Exception as e:
-        print(f"Startup DB warning: {e}")
+        print(f"Startup DB info: {e}")
 
-app.include_router(auth_router)
-app.include_router(users_router)
+# Include routers under /api, /api/v1, and root so any request format works
+app.include_router(auth_router, prefix='/api/v1/auth')
+app.include_router(auth_router, prefix='/api/auth')
+app.include_router(auth_router, prefix='/auth')
 
-@app.get('/api/v1/health')
-@app.get('/api/health')
-@app.get('/health')
+app.include_router(users_router, prefix='/api/v1/users')
+app.include_router(users_router, prefix='/api/users')
+app.include_router(users_router, prefix='/users')
+
+@app.get('/')
 @app.get('/api')
-async def health_check():
+@app.get('/health')
+@app.get('/api/health')
+@app.get('/api/v1/health')
+async def health():
     return {'status': 'healthy', 'version': '1.0.0'}

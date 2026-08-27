@@ -7,7 +7,7 @@ from app.auth.models import User
 from app.auth.schemas import UserResponse, UserRoleUpdate, UserStatusUpdate
 from app.auth.service import get_all_users, update_user_role, update_user_status
 
-router = APIRouter(prefix='/api/v1/users', tags=['Users (RBAC)'])
+router = APIRouter(tags=['Users (RBAC)'])
 
 @router.get('', response_model=List[UserResponse])
 async def list_users(
@@ -37,3 +37,4 @@ async def change_user_status(
     if str(admin_user.id) == user_id:
         raise HTTPException(status_code=400, detail="Cannot change your own status")
     return await update_user_status(db, user_id, data.is_active)
+

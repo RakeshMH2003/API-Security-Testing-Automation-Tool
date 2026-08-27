@@ -14,7 +14,7 @@ from app.database import get_db
 from app.core.security import get_current_user
 from app.auth.models import User
 
-router = APIRouter(prefix='/api/v1/auth', tags=['auth'])
+router = APIRouter(tags=['auth'])
 security = HTTPBearer()
 
 @router.post('/register', response_model=MessageResponse, status_code=status.HTTP_201_CREATED)
@@ -79,3 +79,4 @@ async def update_password(
 ):
     await change_password(db, str(current_user.id), data)
     return MessageResponse(message='Password changed successfully')
+
