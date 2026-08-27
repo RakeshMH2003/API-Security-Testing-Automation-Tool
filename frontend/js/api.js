@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8000/api/v1';
+﻿const API_BASE = '/api/v1';
 
 class ApiClient {
   constructor() {
@@ -32,7 +32,7 @@ class ApiClient {
       throw new Error('Cannot connect to server. Make sure the backend is running.');
     }
 
-    // Handle 401 — only redirect on protected routes
+    // Handle 401 â€” only redirect on protected routes
     if (response.status === 401 && requiresAuth) {
       this.clearTokens();
       window.location.href = 'login.html';
@@ -70,7 +70,7 @@ class ApiClient {
   }
 
   // REGISTER: sends JSON {email, password, full_name}
-  // Does NOT auto-login — returns success message only
+  // Does NOT auto-login â€” returns success message only
   async register(email, password, full_name) {
     return await this.post('/auth/register', { email, password, full_name }, false);
   }
@@ -96,4 +96,5 @@ class ApiClient {
 }
 
 const api = new ApiClient();
+
 
