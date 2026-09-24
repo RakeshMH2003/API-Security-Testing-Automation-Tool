@@ -7,6 +7,7 @@ from app.auth.models import User
 from app.auth.utils import hash_password
 from app.auth.router import router as auth_router
 from app.users.router import router as users_router
+from app.projects.router import router as projects_router
 from sqlalchemy.future import select
 
 app = FastAPI(
@@ -32,7 +33,7 @@ async def startup_event():
             admin = result.scalars().first()
             if not admin:
                 new_admin = User(
-                    id=uuid.uuid4(),
+                    id=str(uuid.uuid4()),
                     email='admin@security.local',
                     password_hash=hash_password('Admin@1234'),
                     full_name='Platform Admin',
@@ -45,7 +46,7 @@ async def startup_event():
     except Exception as e:
         print(f"Startup DB info: {e}")
 
-# Include routers under /api, /api/v1, and root so any request format works
+# Include routers
 app.include_router(auth_router, prefix='/api/v1/auth')
 app.include_router(auth_router, prefix='/api/auth')
 app.include_router(auth_router, prefix='/auth')
@@ -53,6 +54,8 @@ app.include_router(auth_router, prefix='/auth')
 app.include_router(users_router, prefix='/api/v1/users')
 app.include_router(users_router, prefix='/api/users')
 app.include_router(users_router, prefix='/users')
+
+app.include_router(projects_router)
 
 @app.get('/')
 @app.get('/api')
