@@ -1,4 +1,4 @@
-﻿const API_BASE = '/api';
+const API_BASE = '/api';
 
 class ApiClient {
   constructor() {
@@ -14,12 +14,12 @@ class ApiClient {
   }
 
   async request(method, endpoint, body = null, requiresAuth = true) {
-    const url = ${this.baseUrl};
+    const url = this.baseUrl + endpoint;
     const headers = { 'Content-Type': 'application/json' };
 
     if (requiresAuth) {
       const token = this.getToken();
-      if (token) headers['Authorization'] = Bearer ;
+      if (token) headers['Authorization'] = 'Bearer ' + token;
     }
 
     const config = { method, headers };
@@ -46,7 +46,7 @@ class ApiClient {
     }
 
     if (!response.ok) {
-      throw new Error(data.detail || data.message || Error );
+      throw new Error(data.detail || data.message || ('Error ' + response.status));
     }
 
     return data;
@@ -82,36 +82,36 @@ class ApiClient {
 
   // --- Admin RBAC Methods ---
   async getUsers() { return this.get('/users', true); }
-  async updateUserRole(userId, role) { return this.put(/users//role, { role }, true); }
-  async updateUserStatus(userId, is_active) { return this.put(/users//status, { is_active }, true); }
+  async updateUserRole(userId, role) { return this.put('/users/' + userId + '/role', { role }, true); }
+  async updateUserStatus(userId, is_active) { return this.put('/users/' + userId + '/status', { is_active }, true); }
 
   // --- Phase 1: Projects, Targets, Scope & Rate Limit ---
   async getProjects() { return this.get('/projects', true); }
   async createProject(data) { return this.post('/projects', data, true); }
-  async getProjectDetails(id) { return this.get(/projects/, true); }
-  async updateProject(id, data) { return this.put(/projects/, data, true); }
-  async deleteProject(id) { return this.delete(/projects/, true); }
+  async getProjectDetails(id) { return this.get('/projects/' + id, true); }
+  async updateProject(id, data) { return this.put('/projects/' + id, data, true); }
+  async deleteProject(id) { return this.delete('/projects/' + id, true); }
 
-  async addTarget(projectId, data) { return this.post(/projects//targets, data, true); }
-  async deleteTarget(targetId) { return this.delete(/targets/, true); }
+  async addTarget(projectId, data) { return this.post('/projects/' + projectId + '/targets', data, true); }
+  async deleteTarget(targetId) { return this.delete('/targets/' + targetId, true); }
 
-  async addScopeRule(projectId, data) { return this.post(/projects//scope, data, true); }
-  async deleteScopeRule(ruleId) { return this.delete(/scope/, true); }
+  async addScopeRule(projectId, data) { return this.post('/projects/' + projectId + '/scope', data, true); }
+  async deleteScopeRule(ruleId) { return this.delete('/scope/' + ruleId, true); }
 
-  async updateRateLimit(projectId, data) { return this.put(/projects//rate-limit, data, true); }
+  async updateRateLimit(projectId, data) { return this.put('/projects/' + projectId + '/rate-limit', data, true); }
 
   // --- Phase 2: API Discovery & Inventory (Modules 06-10) ---
-  async getProjectEndpoints(projectId) { return this.get(/v1/projects//endpoints, true); }
-  async addEndpoint(projectId, data) { return this.post(/v1/projects//endpoints, data, true); }
-  async deleteEndpoint(endpointId) { return this.delete(/v1/endpoints/, true); }
+  async getProjectEndpoints(projectId) { return this.get('/v1/projects/' + projectId + '/endpoints', true); }
+  async addEndpoint(projectId, data) { return this.post('/v1/projects/' + projectId + '/endpoints', data, true); }
+  async deleteEndpoint(endpointId) { return this.delete('/v1/endpoints/' + endpointId, true); }
 
-  async importOpenAPI(projectId, specContent) { return this.post(/v1/projects//import/openapi, { spec_content: specContent }, true); }
-  async importPostman(projectId, collectionContent) { return this.post(/v1/projects//import/postman, { collection_content: collectionContent }, true); }
-  async spiderCrawl(projectId, targetUrl, depth = 2) { return this.post(/v1/projects//crawl, { target_url: targetUrl, depth }, true); }
+  async importOpenAPI(projectId, specContent) { return this.post('/v1/projects/' + projectId + '/import/openapi', { spec_content: specContent }, true); }
+  async importPostman(projectId, collectionContent) { return this.post('/v1/projects/' + projectId + '/import/postman', { collection_content: collectionContent }, true); }
+  async spiderCrawl(projectId, targetUrl, depth = 2) { return this.post('/v1/projects/' + projectId + '/crawl', { target_url: targetUrl, depth }, true); }
 
-  async getAuthProfiles(projectId) { return this.get(/v1/projects//auth-profiles, true); }
-  async createAuthProfile(projectId, data) { return this.post(/v1/projects//auth-profiles, data, true); }
-  async deleteAuthProfile(profileId) { return this.delete(/v1/auth-profiles/, true); }
+  async getAuthProfiles(projectId) { return this.get('/v1/projects/' + projectId + '/auth-profiles', true); }
+  async createAuthProfile(projectId, data) { return this.post('/v1/projects/' + projectId + '/auth-profiles', data, true); }
+  async deleteAuthProfile(profileId) { return this.delete('/v1/auth-profiles/' + profileId, true); }
 }
 
 const api = new ApiClient();
