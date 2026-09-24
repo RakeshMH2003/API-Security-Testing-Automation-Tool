@@ -99,6 +99,19 @@ class ApiClient {
   async deleteScopeRule(ruleId) { return this.delete(/scope/, true); }
 
   async updateRateLimit(projectId, data) { return this.put(/projects//rate-limit, data, true); }
+
+  // --- Phase 2: API Discovery & Inventory (Modules 06-10) ---
+  async getProjectEndpoints(projectId) { return this.get(/v1/projects//endpoints, true); }
+  async addEndpoint(projectId, data) { return this.post(/v1/projects//endpoints, data, true); }
+  async deleteEndpoint(endpointId) { return this.delete(/v1/endpoints/, true); }
+
+  async importOpenAPI(projectId, specContent) { return this.post(/v1/projects//import/openapi, { spec_content: specContent }, true); }
+  async importPostman(projectId, collectionContent) { return this.post(/v1/projects//import/postman, { collection_content: collectionContent }, true); }
+  async spiderCrawl(projectId, targetUrl, depth = 2) { return this.post(/v1/projects//crawl, { target_url: targetUrl, depth }, true); }
+
+  async getAuthProfiles(projectId) { return this.get(/v1/projects//auth-profiles, true); }
+  async createAuthProfile(projectId, data) { return this.post(/v1/projects//auth-profiles, data, true); }
+  async deleteAuthProfile(profileId) { return this.delete(/v1/auth-profiles/, true); }
 }
 
 const api = new ApiClient();
