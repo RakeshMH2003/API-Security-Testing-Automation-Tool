@@ -13,23 +13,29 @@ except Exception as e:
     err_traceback = traceback.format_exc()
     
     async def app(scope, receive, send):
-        if scope['type'] != 'http':
-            return
+        if scope['type'] == 'lifespan':
+            while True:
+                message = await receive()
+                if message['type'] == 'lifespan.startup':
+                    await send({'type': 'lifespan.startup.complete'})
+                elif message['type'] == 'lifespan.shutdown':
+                    await send({'type': 'lifespan.shutdown.complete'})
+                    return
+        elif scope['type'] == 'http':
+            response_body = json.dumps({
+                "error": "Initialization failed",
+                "traceback": err_traceback,
+                "python_version": sys.version,
+            }).encode('utf-8')
             
-        response_body = json.dumps({
-            "error": "Initialization failed",
-            "traceback": err_traceback,
-            "python_version": sys.version,
-        }).encode('utf-8')
-        
-        await send({
-            'type': 'http.response.start',
-            'status': 200,
-            'headers': [
-                [b'content-type', b'application/json'],
-            ],
-        })
-        await send({
-            'type': 'http.response.body',
-            'body': response_body,
-        })
+            await send({
+                'type': 'http.response.start',
+                'status': 200,
+                'headers': [
+                    [b'content-type', b'application/json'],
+                ],
+            })
+            await send({
+                'type': 'http.response.body',
+                'body': response_body,
+            })
