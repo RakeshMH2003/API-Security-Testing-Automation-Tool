@@ -1,19 +1,24 @@
 import sys
-import os
+import json
 import traceback
+import pkg_resources
 
-api_dir = os.path.dirname(os.path.abspath(__file__))
-if api_dir not in sys.path:
-    sys.path.insert(0, api_dir)
-
-try:
-    from app.main import app
-except Exception as e:
-    # If import fails, create a dummy FastAPI app to return the error
-    from fastapi import FastAPI
-    app = FastAPI()
+def app(environ, start_response):
+    status = '200 OK'
+    response_headers = [('Content-type', 'application/json')]
+    start_response(status, response_headers)
     
-    error_msg = traceback.format_exc()
-    @app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-    async def catch_all(path: str):
-        return {"error": "Initialization failed", "traceback": error_msg}
+    try:
+        installed = {d.project_name: d.version for d in pkg_resources.working_set}
+        import os
+        cwd = os.getcwd()
+        files = os.listdir(cwd)
+        data = {
+            "cwd": cwd,
+            "sys_path": sys.path,
+            "files": files,
+            "installed": installed
+        }
+        return [json.dumps(data).encode('utf-8')]
+    except Exception as e:
+        return [json.dumps({"error": traceback.format_exc()}).encode('utf-8')]
