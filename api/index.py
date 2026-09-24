@@ -24,7 +24,7 @@ except Exception as e:
         
         await send({
             'type': 'http.response.start',
-            'status': 500,
+            'status': 200,
             'headers': [
                 [b'content-type', b'application/json'],
             ],
