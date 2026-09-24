@@ -1,24 +1,11 @@
 import sys
-import json
-import traceback
-import pkg_resources
+import os
 
-def app(environ, start_response):
-    status = '200 OK'
-    response_headers = [('Content-type', 'application/json')]
-    start_response(status, response_headers)
-    
-    try:
-        installed = {d.project_name: d.version for d in pkg_resources.working_set}
-        import os
-        cwd = os.getcwd()
-        files = os.listdir(cwd)
-        data = {
-            "cwd": cwd,
-            "sys_path": sys.path,
-            "files": files,
-            "installed": installed
-        }
-        return [json.dumps(data).encode('utf-8')]
-    except Exception as e:
-        return [json.dumps({"error": traceback.format_exc()}).encode('utf-8')]
+api_dir = os.path.dirname(os.path.abspath(__file__))
+if api_dir not in sys.path:
+    sys.path.insert(0, api_dir)
+
+from app.main import app
+
+# Create a variable named app for Vercel Serverless Function to find
+app = app
