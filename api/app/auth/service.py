@@ -1,4 +1,5 @@
-﻿from sqlalchemy.ext.asyncio import AsyncSession
+import uuid
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from fastapi import HTTPException, status
 from datetime import datetime
@@ -13,6 +14,7 @@ async def register_user(db: AsyncSession, data: UserRegister) -> User:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
 
     new_user = User(
+        id=str(uuid.uuid4()),
         email=data.email,
         password_hash=hash_password(data.password),
         full_name=data.full_name
@@ -60,7 +62,6 @@ async def update_user_profile(db: AsyncSession, user_id: str, data: UserUpdate) 
     if data.full_name is not None:
         user.full_name = data.full_name
     if data.email is not None:
-        # Check if new email is already taken
         stmt = select(User).where(User.email == data.email)
         result = await db.execute(stmt)
         if result.scalars().first() and data.email != user.email:
@@ -93,8 +94,6 @@ async def is_token_blacklisted(db: AsyncSession, jti: str) -> bool:
     stmt = select(TokenBlacklist).where(TokenBlacklist.token_jti == jti)
     result = await db.execute(stmt)
     return result.scalars().first() is not None
-
-# --- RBAC Services ---
 
 async def get_all_users(db: AsyncSession):
     result = await db.execute(select(User).order_by(User.created_at.desc()))

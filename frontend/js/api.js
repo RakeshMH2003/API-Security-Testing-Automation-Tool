@@ -39,10 +39,11 @@ class ApiClient {
     }
 
     let data;
+    const responseText = await response.text();
     try {
-      data = await response.json();
+      data = JSON.parse(responseText);
     } catch {
-      throw new Error('Invalid response from server.');
+      data = { detail: responseText || ('Error ' + response.status) };
     }
 
     if (!response.ok) {
