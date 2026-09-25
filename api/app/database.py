@@ -1,8 +1,20 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import declarative_base
+from sqlalchemy.pool import StaticPool
 from app.config import settings
 
-engine = create_async_engine(settings.get_database_url, echo=False)
+db_url = settings.get_database_url
+
+if "sqlite" in db_url:
+    engine = create_async_engine(
+        db_url,
+        echo=False,
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool
+    )
+else:
+    engine = create_async_engine(db_url, echo=False)
+
 AsyncSessionLocal = async_sessionmaker(
     engine, class_=AsyncSession, expire_on_commit=False
 )

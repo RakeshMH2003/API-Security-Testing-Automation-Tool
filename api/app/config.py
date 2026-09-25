@@ -1,4 +1,4 @@
-﻿from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, SettingsConfigDict
 import os
 
 class Settings(BaseSettings):
@@ -33,6 +33,6 @@ class Settings(BaseSettings):
             if "sslmode=" in url:
                 url = url.replace("sslmode=require", "ssl=require").replace("sslmode=verify-full", "ssl=require").replace("sslmode=prefer", "ssl=prefer")
             return url
-        return "sqlite+aiosqlite:////tmp/apisec.db"
+        return "sqlite+aiosqlite:///:memory:"
 
 settings = Settings()
