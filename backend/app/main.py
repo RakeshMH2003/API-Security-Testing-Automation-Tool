@@ -1,4 +1,4 @@
-﻿import os
+import os
 import uuid
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,6 +9,7 @@ from app.auth.router import router as auth_router
 from app.users.router import router as users_router
 from app.projects.router import router as projects_router
 from app.discovery.router import router as discovery_router
+from app.scanner.router import router as scanner_router
 from sqlalchemy.future import select
 
 app = FastAPI(title='API Security Testing Platform', version='2.0.0')
@@ -40,6 +41,7 @@ app.include_router(users_router, prefix='/api/users')
 app.include_router(users_router, prefix='/users')
 app.include_router(projects_router)
 app.include_router(discovery_router)
+app.include_router(scanner_router)
 
 @app.get('/')
 @app.get('/api')
