@@ -1,4 +1,4 @@
-﻿from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import declarative_base
 from app.config import settings
 
@@ -9,11 +9,20 @@ AsyncSessionLocal = async_sessionmaker(
 
 Base = declarative_base()
 
-async def get_db():
-    async with AsyncSessionLocal() as session:
-        yield session
+_tables_created = False
 
 async def create_tables():
+    global _tables_created
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+    _tables_created = True
 
+async def get_db():
+    global _tables_created
+    if not _tables_created:
+        try:
+            await create_tables()
+        except Exception as e:
+            print(f"DB auto-init info: {e}")
+    async with AsyncSessionLocal() as session:
+        yield session
