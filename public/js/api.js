@@ -112,6 +112,13 @@ class ApiClient {
   async getAuthProfiles(projectId) { return this.get('/v1/projects/' + projectId + '/auth-profiles', true); }
   async createAuthProfile(projectId, data) { return this.post('/v1/projects/' + projectId + '/auth-profiles', data, true); }
   async deleteAuthProfile(profileId) { return this.delete('/v1/auth-profiles/' + profileId, true); }
+
+  // --- Phase 3: Security Scanner & Vulnerability Findings ---
+  async getScanJobs(projectId) { return this.get('/v1/projects/' + projectId + '/scans', true); }
+  async launchScan(projectId, data = { scan_type: 'full' }) { return this.post('/v1/projects/' + projectId + '/scans', data, true); }
+  async getScanDetails(scanId) { return this.get('/v1/scans/' + scanId, true); }
+  async getProjectFindings(projectId) { return this.get('/v1/projects/' + projectId + '/findings', true); }
+  async toggleFalsePositive(findingId) { return this.put('/v1/findings/' + findingId + '/false-positive', {}, true); }
 }
 
 const api = new ApiClient();

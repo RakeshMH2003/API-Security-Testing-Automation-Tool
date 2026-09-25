@@ -195,6 +195,7 @@
   <script src="js/utils.js"></script>
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/scanner.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       requireAuth();
@@ -233,13 +234,6 @@
 
       document.getElementById('toggle-sidebar').addEventListener('click', () => {
         document.getElementById('sidebar').classList.toggle('hidden');
-      });
-
-      document.querySelectorAll('.nav-coming-soon').forEach(el => {
-        el.addEventListener('click', (e) => {
-          e.preventDefault();
-          showToast('Feature coming in Module 02+', 'info');
-        });
       });
     });
   </script>
