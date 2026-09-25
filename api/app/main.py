@@ -4,7 +4,10 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import create_tables, AsyncSessionLocal
-from app.auth.models import User
+from app.auth.models import User, TokenBlacklist
+from app.projects.models import Project, Target, ScopeRule, RateLimitConfig
+from app.discovery.models import Endpoint, AuthProfile
+from app.scanner.models import ScanJob, VulnerabilityFinding
 from app.auth.utils import hash_password
 from app.auth.router import router as auth_router
 from app.users.router import router as users_router
